@@ -16,6 +16,8 @@
 /lib
 /test-reports/
 build/Release
+cdk.context.json
+cdk.out/
 coverage
 jspm_packages/
 junit.xml

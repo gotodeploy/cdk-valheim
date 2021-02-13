@@ -2,7 +2,7 @@
   "name": "cdk-valheim",
   "repository": {
     "type": "git",
-    "url": "https://github.com/1491134+gotodeploy/cdk-valheim.git"
+    "url": "https://github.com/gotodeploy/cdk-valheim.git"
   },
   "scripts": {
     "projen": "npx projen",
@@ -29,7 +29,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^1.73.0",
+    "@aws-cdk/assert": "^1.89.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^10.17.0",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
@@ -51,7 +51,21 @@
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
+    "@aws-cdk/aws-applicationautoscaling": "^1.89.0",
+    "@aws-cdk/aws-ec2": "^1.89.0",
+    "@aws-cdk/aws-ecs": "^1.89.0",
+    "@aws-cdk/aws-efs": "^1.89.0",
+    "@aws-cdk/aws-logs": "^1.89.0",
+    "@aws-cdk/core": "^1.89.0",
     "constructs": "^3.2.27"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-applicationautoscaling": "^1.89.0",
+    "@aws-cdk/aws-ec2": "^1.89.0",
+    "@aws-cdk/aws-ecs": "^1.89.0",
+    "@aws-cdk/aws-efs": "^1.89.0",
+    "@aws-cdk/aws-logs": "^1.89.0",
+    "@aws-cdk/core": "^1.89.0"
   },
   "bundledDependencies": [],
   "keywords": [
@@ -59,7 +73,7 @@
   ],
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "jest": {
     "testMatch": [
       "**/__tests__/**/*.ts?(x)",

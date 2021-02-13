@@ -3,15 +3,27 @@ const { AwsCdkConstructLibrary } = require('projen');
 const project = new AwsCdkConstructLibrary({
   author: 'gotodeploy',
   authorAddress: '1491134+gotodeploy@users.noreply.github.com',
-  cdkVersion: '1.73.0',
+  cdkVersion: '1.89.0',
   defaultReleaseBranch: 'main',
-  jsiiFqn: "projen.AwsCdkConstructLibrary",
+  jsiiFqn: 'projen.AwsCdkConstructLibrary',
   name: 'cdk-valheim',
-  repositoryUrl: 'https://github.com/1491134+gotodeploy/cdk-valheim.git',
+  repositoryUrl: 'https://github.com/gotodeploy/cdk-valheim.git',
+  cdkDependencies: [
+    '@aws-cdk/aws-applicationautoscaling',
+    '@aws-cdk/aws-ec2',
+    '@aws-cdk/aws-ecs',
+    '@aws-cdk/aws-efs',
+    '@aws-cdk/aws-logs',
+    '@aws-cdk/core',
+  ],
+  license: 'Apache-2.0',
+  gitignore: [
+    'cdk.context.json',
+    'cdk.out/',
+  ],
 
   /* AwsCdkConstructLibraryOptions */
   // cdkAssert: true,                                                          /* Install the @aws-cdk/assert library? */
-  // cdkDependencies: undefined,                                               /* Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed? */
   // cdkTestDependencies: undefined,                                           /* AWS CDK modules required for testing. */
   // cdkVersionPinning: false,                                                 /* Use pinned version instead of caret version for CDK. */
 
@@ -45,7 +57,6 @@ const project = new AwsCdkConstructLibrary({
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (`main` in `package.json`). */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // keywords: undefined,                                                      /* Keywords to include in `package.json`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via `engines` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json `engines` (inclusive). */
@@ -73,7 +84,6 @@ const project = new AwsCdkConstructLibrary({
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
-  // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of `jsii-release` which is used to publish modules to npm. */

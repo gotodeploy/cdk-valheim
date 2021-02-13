@@ -1,0 +1,717 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ValheimWorldSnapshot 1`] = `
+Object {
+  "Outputs": Object {
+    "ValheimWorldValheimServiceArnEB328879": Object {
+      "Value": Object {
+        "Ref": "ValheimWorldValheimServiceCC61ABC6",
+      },
+    },
+  },
+  "Resources": Object {
+    "ValheimWorldValheimClusterE58CB7BF": Object {
+      "Type": "AWS::ECS::Cluster",
+    },
+    "ValheimWorldValheimSaveDataEFSEF58E82E": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "FileSystemTags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/ValheimWorld/ValheimSaveDataEFS",
+          },
+        ],
+        "LifecyclePolicies": Array [
+          Object {
+            "TransitionToIA": "AFTER_14_DAYS",
+          },
+        ],
+      },
+      "Type": "AWS::EFS::FileSystem",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "ValheimWorldValheimSaveDataEFSEfsMountTarget18EB7120E": Object {
+      "Properties": Object {
+        "FileSystemId": Object {
+          "Ref": "ValheimWorldValheimSaveDataEFSEF58E82E",
+        },
+        "SecurityGroups": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "ValheimWorldValheimSaveDataEFSEfsSecurityGroup60989EC4",
+              "GroupId",
+            ],
+          },
+        ],
+        "SubnetId": Object {
+          "Ref": "vpcPrivateSubnet1Subnet934893E8",
+        },
+      },
+      "Type": "AWS::EFS::MountTarget",
+    },
+    "ValheimWorldValheimSaveDataEFSEfsMountTarget2EFE387F8": Object {
+      "Properties": Object {
+        "FileSystemId": Object {
+          "Ref": "ValheimWorldValheimSaveDataEFSEF58E82E",
+        },
+        "SecurityGroups": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "ValheimWorldValheimSaveDataEFSEfsSecurityGroup60989EC4",
+              "GroupId",
+            ],
+          },
+        ],
+        "SubnetId": Object {
+          "Ref": "vpcPrivateSubnet2Subnet7031C2BA",
+        },
+      },
+      "Type": "AWS::EFS::MountTarget",
+    },
+    "ValheimWorldValheimSaveDataEFSEfsSecurityGroup60989EC4": Object {
+      "Properties": Object {
+        "GroupDescription": "Default/ValheimWorld/ValheimSaveDataEFS/EfsSecurityGroup",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/ValheimWorld/ValheimSaveDataEFS",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "ValheimWorldValheimSaveDataEFSEfsSecurityGroupfromValheimWorldValheimServiceSecurityGroup1A2AAFA52049843F1D2F": Object {
+      "Properties": Object {
+        "Description": "from ValheimWorldValheimServiceSecurityGroup1A2AAFA5:2049",
+        "FromPort": 2049,
+        "GroupId": Object {
+          "Fn::GetAtt": Array [
+            "ValheimWorldValheimSaveDataEFSEfsSecurityGroup60989EC4",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "SourceSecurityGroupId": Object {
+          "Fn::GetAtt": Array [
+            "ValheimWorldValheimServiceSecurityGroupC4193CDD",
+            "GroupId",
+          ],
+        },
+        "ToPort": 2049,
+      },
+      "Type": "AWS::EC2::SecurityGroupIngress",
+    },
+    "ValheimWorldValheimServiceCC61ABC6": Object {
+      "Properties": Object {
+        "Cluster": Object {
+          "Ref": "ValheimWorldValheimClusterE58CB7BF",
+        },
+        "DeploymentConfiguration": Object {
+          "MaximumPercent": 200,
+          "MinimumHealthyPercent": 50,
+        },
+        "DesiredCount": 1,
+        "EnableECSManagedTags": false,
+        "LaunchType": "FARGATE",
+        "NetworkConfiguration": Object {
+          "AwsvpcConfiguration": Object {
+            "AssignPublicIp": "ENABLED",
+            "SecurityGroups": Array [
+              Object {
+                "Fn::GetAtt": Array [
+                  "ValheimWorldValheimServiceSecurityGroupC4193CDD",
+                  "GroupId",
+                ],
+              },
+            ],
+            "Subnets": Array [
+              Object {
+                "Ref": "vpcPublicSubnet1Subnet2E65531E",
+              },
+              Object {
+                "Ref": "vpcPublicSubnet2Subnet009B674F",
+              },
+            ],
+          },
+        },
+        "PlatformVersion": "1.4.0",
+        "TaskDefinition": Object {
+          "Ref": "ValheimWorldValheimTaskDefinition40062B44",
+        },
+      },
+      "Type": "AWS::ECS::Service",
+    },
+    "ValheimWorldValheimServiceSecurityGroupC4193CDD": Object {
+      "Properties": Object {
+        "GroupDescription": "Default/ValheimWorld/ValheimService/SecurityGroup",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "from 0.0.0.0/0:UDP 2456-2458",
+            "FromPort": 2456,
+            "IpProtocol": "udp",
+            "ToPort": 2458,
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "ValheimWorldValheimServiceSecurityGroupfromValheimWorldValheimSaveDataEFSEfsSecurityGroup9E6C33642049DC54E36A": Object {
+      "Properties": Object {
+        "Description": "from ValheimWorldValheimSaveDataEFSEfsSecurityGroup9E6C3364:2049",
+        "FromPort": 2049,
+        "GroupId": Object {
+          "Fn::GetAtt": Array [
+            "ValheimWorldValheimServiceSecurityGroupC4193CDD",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "SourceSecurityGroupId": Object {
+          "Fn::GetAtt": Array [
+            "ValheimWorldValheimSaveDataEFSEfsSecurityGroup60989EC4",
+            "GroupId",
+          ],
+        },
+        "ToPort": 2049,
+      },
+      "Type": "AWS::EC2::SecurityGroupIngress",
+    },
+    "ValheimWorldValheimTaskDefinition40062B44": Object {
+      "Properties": Object {
+        "ContainerDefinitions": Array [
+          Object {
+            "Essential": true,
+            "Image": "lloesche/valheim-server",
+            "LogConfiguration": Object {
+              "LogDriver": "awslogs",
+              "Options": Object {
+                "awslogs-group": Object {
+                  "Ref": "ValheimWorldValheimTaskDefinitionValheimContainerLogGroup9C64AB45",
+                },
+                "awslogs-region": Object {
+                  "Ref": "AWS::Region",
+                },
+                "awslogs-stream-prefix": "valheim",
+              },
+            },
+            "MountPoints": Array [
+              Object {
+                "ContainerPath": "/config/",
+                "ReadOnly": false,
+                "SourceVolume": "valheim-save-data",
+              },
+            ],
+            "Name": "ValheimContainer",
+          },
+        ],
+        "Cpu": "512",
+        "ExecutionRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ValheimWorldValheimTaskDefinitionExecutionRoleE0903F44",
+            "Arn",
+          ],
+        },
+        "Family": "valheim-world",
+        "Memory": "2048",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": Array [
+          "FARGATE",
+        ],
+        "TaskRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ValheimWorldValheimTaskDefinitionTaskRole0935CE1E",
+            "Arn",
+          ],
+        },
+        "Volumes": Array [
+          Object {
+            "EfsVolumeConfiguration": Object {
+              "FileSystemId": Object {
+                "Ref": "ValheimWorldValheimSaveDataEFSEF58E82E",
+              },
+            },
+            "Name": "valheim-save-data",
+          },
+        ],
+      },
+      "Type": "AWS::ECS::TaskDefinition",
+    },
+    "ValheimWorldValheimTaskDefinitionExecutionRoleDefaultPolicyF0089BC9": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "ValheimWorldValheimTaskDefinitionValheimContainerLogGroup9C64AB45",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ValheimWorldValheimTaskDefinitionExecutionRoleDefaultPolicyF0089BC9",
+        "Roles": Array [
+          Object {
+            "Ref": "ValheimWorldValheimTaskDefinitionExecutionRoleE0903F44",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ValheimWorldValheimTaskDefinitionExecutionRoleE0903F44": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ValheimWorldValheimTaskDefinitionTaskRole0935CE1E": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ValheimWorldValheimTaskDefinitionValheimContainerLogGroup9C64AB45": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "RetentionInDays": 1,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "vpcA2121C38": Object {
+      "Properties": Object {
+        "CidrBlock": "10.0.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::VPC",
+    },
+    "vpcIGWE57CBDCA": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::InternetGateway",
+    },
+    "vpcPrivateSubnet1DefaultRoute1AA8E2E5": Object {
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": Object {
+          "Ref": "vpcPublicSubnet1NATGateway9C16659E",
+        },
+        "RouteTableId": Object {
+          "Ref": "vpcPrivateSubnet1RouteTableB41A48CC",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "vpcPrivateSubnet1RouteTableAssociation67945127": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "vpcPrivateSubnet1RouteTableB41A48CC",
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPrivateSubnet1Subnet934893E8",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "vpcPrivateSubnet1RouteTableB41A48CC": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PrivateSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "vpcPrivateSubnet1Subnet934893E8": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.128.0/18",
+        "MapPublicIpOnLaunch": false,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PrivateSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "vpcPrivateSubnet2DefaultRouteB0E07F99": Object {
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": Object {
+          "Ref": "vpcPublicSubnet2NATGateway9B8AE11A",
+        },
+        "RouteTableId": Object {
+          "Ref": "vpcPrivateSubnet2RouteTable7280F23E",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "vpcPrivateSubnet2RouteTable7280F23E": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PrivateSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "vpcPrivateSubnet2RouteTableAssociation007E94D3": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "vpcPrivateSubnet2RouteTable7280F23E",
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPrivateSubnet2Subnet7031C2BA",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "vpcPrivateSubnet2Subnet7031C2BA": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            1,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.192.0/18",
+        "MapPublicIpOnLaunch": false,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PrivateSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "vpcPublicSubnet1DefaultRoute10708846": Object {
+      "DependsOn": Array [
+        "vpcVPCGW7984C166",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": Object {
+          "Ref": "vpcIGWE57CBDCA",
+        },
+        "RouteTableId": Object {
+          "Ref": "vpcPublicSubnet1RouteTable48A2DF9B",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "vpcPublicSubnet1EIPDA49DCBE": Object {
+      "Properties": Object {
+        "Domain": "vpc",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PublicSubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::EIP",
+    },
+    "vpcPublicSubnet1NATGateway9C16659E": Object {
+      "Properties": Object {
+        "AllocationId": Object {
+          "Fn::GetAtt": Array [
+            "vpcPublicSubnet1EIPDA49DCBE",
+            "AllocationId",
+          ],
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPublicSubnet1Subnet2E65531E",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PublicSubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::NatGateway",
+    },
+    "vpcPublicSubnet1RouteTable48A2DF9B": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PublicSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "vpcPublicSubnet1RouteTableAssociation5D3F4579": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "vpcPublicSubnet1RouteTable48A2DF9B",
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPublicSubnet1Subnet2E65531E",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "vpcPublicSubnet1Subnet2E65531E": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.0.0/18",
+        "MapPublicIpOnLaunch": true,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PublicSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "vpcPublicSubnet2DefaultRouteA1EC0F60": Object {
+      "DependsOn": Array [
+        "vpcVPCGW7984C166",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": Object {
+          "Ref": "vpcIGWE57CBDCA",
+        },
+        "RouteTableId": Object {
+          "Ref": "vpcPublicSubnet2RouteTableEB40D4CB",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "vpcPublicSubnet2EIP9B3743B1": Object {
+      "Properties": Object {
+        "Domain": "vpc",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PublicSubnet2",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::EIP",
+    },
+    "vpcPublicSubnet2NATGateway9B8AE11A": Object {
+      "Properties": Object {
+        "AllocationId": Object {
+          "Fn::GetAtt": Array [
+            "vpcPublicSubnet2EIP9B3743B1",
+            "AllocationId",
+          ],
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPublicSubnet2Subnet009B674F",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PublicSubnet2",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::NatGateway",
+    },
+    "vpcPublicSubnet2RouteTableAssociation21F81B59": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "vpcPublicSubnet2RouteTableEB40D4CB",
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPublicSubnet2Subnet009B674F",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "vpcPublicSubnet2RouteTableEB40D4CB": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PublicSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "vpcPublicSubnet2Subnet009B674F": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            1,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.64.0/18",
+        "MapPublicIpOnLaunch": true,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Default/vpc/PublicSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "vpcVPCGW7984C166": Object {
+      "Properties": Object {
+        "InternetGatewayId": Object {
+          "Ref": "vpcIGWE57CBDCA",
+        },
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+    },
+  },
+}
+`;
