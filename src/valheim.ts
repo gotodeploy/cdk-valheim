@@ -81,7 +81,7 @@ export class ValheimWorld extends Construct {
     this.service.connections.allowFrom(fileSystem, ec2.Port.tcp(2049));
     this.service.connections.allowTo(fileSystem, ec2.Port.tcp(2049));
 
-    // Allow TCP 2456-2458 for Valheim
+    // Allow UDP 2456-2458 for Valheim
     this.service.connections.allowFrom(ec2.Peer.anyIpv4(), ec2.Port.udpRange(2456, 2458));
 
     new CfnOutput(this, 'ValheimServiceArn', {
