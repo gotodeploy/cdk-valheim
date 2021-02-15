@@ -2,7 +2,7 @@ import * as ec2 from '@aws-cdk/aws-ec2';
 import * as ecs from '@aws-cdk/aws-ecs';
 import * as efs from '@aws-cdk/aws-efs';
 import * as logs from '@aws-cdk/aws-logs';
-import { CfnOutput, Construct, RemovalPolicy } from '@aws-cdk/core';
+import { CfnOutput, Construct } from '@aws-cdk/core';
 
 export interface ValheimWorldProps {
   readonly vpc?: ec2.IVpc;
@@ -23,7 +23,7 @@ export interface ValheimWorldProps {
    *
    * 4096 (4 vCPU) - Available memory values: Between 8192 (8 GB) and 30720 (30 GB) in increments of 1024 (1 GB)
    *
-   * @default 512
+   * @default 1024
    */
   readonly cpu?: number;
   /**
@@ -51,12 +51,6 @@ export interface ValheimWorldProps {
   readonly environment?: {
     [key: string]: string;
   };
-  /**
-   * valheim server log Group RemovalPolicy.
-   *
-   * @default - RemovalPolicy.DESTROY
-   */
-  readonly logGroupRemovalPolicy?: RemovalPolicy;
 }
 
 
@@ -84,16 +78,10 @@ export class ValheimWorld extends Construct {
         fileSystemId: fileSystem.fileSystemId,
       },
     };
-    // Create the logGroup.
-    const logGroup = new logs.LogGroup(this, 'ValheimServer', {
-      logGroupName: 'ValheimServer',
-      retention: logs.RetentionDays.ONE_DAY,
-      removalPolicy: props?.logGroupRemovalPolicy ?? RemovalPolicy.DESTROY,
-    } );
     const taskDefinition = new ecs.FargateTaskDefinition(this, 'ValheimTaskDefinition', {
       family: 'valheim-world',
       volumes: [volumeConfig],
-      cpu: props?.cpu ?? 512,
+      cpu: props?.cpu ?? 1024,
       memoryLimitMiB: props?.memoryLimitMiB ?? 2048,
     });
 
@@ -101,7 +89,7 @@ export class ValheimWorld extends Construct {
       image: props?.image ?? ecs.ContainerImage.fromRegistry('lloesche/valheim-server'),
       logging: new ecs.AwsLogDriver({
         streamPrefix: 'valheim',
-        logGroup: logGroup,
+        logRetention: logs.RetentionDays.ONE_DAY,
       }),
       environment: props?.environment,
     });
