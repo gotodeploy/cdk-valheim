@@ -226,7 +226,7 @@ Object {
             "Name": "ValheimContainer",
           },
         ],
-        "Cpu": "512",
+        "Cpu": "1024",
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "ValheimWorldValheimTaskDefinitionExecutionRoleE0903F44",
