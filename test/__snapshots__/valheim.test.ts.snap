@@ -112,15 +112,6 @@ Object {
       },
       "Type": "AWS::EC2::SecurityGroupIngress",
     },
-    "ValheimWorldValheimServer407BE9DE": Object {
-      "DeletionPolicy": "Delete",
-      "Properties": Object {
-        "LogGroupName": "ValheimServer",
-        "RetentionInDays": 1,
-      },
-      "Type": "AWS::Logs::LogGroup",
-      "UpdateReplacePolicy": "Delete",
-    },
     "ValheimWorldValheimServiceCC61ABC6": Object {
       "Properties": Object {
         "Cluster": Object {
@@ -217,7 +208,7 @@ Object {
               "LogDriver": "awslogs",
               "Options": Object {
                 "awslogs-group": Object {
-                  "Ref": "ValheimWorldValheimServer407BE9DE",
+                  "Ref": "ValheimWorldValheimTaskDefinitionValheimContainerLogGroup9C64AB45",
                 },
                 "awslogs-region": Object {
                   "Ref": "AWS::Region",
@@ -279,7 +270,7 @@ Object {
               "Effect": "Allow",
               "Resource": Object {
                 "Fn::GetAtt": Array [
-                  "ValheimWorldValheimServer407BE9DE",
+                  "ValheimWorldValheimTaskDefinitionValheimContainerLogGroup9C64AB45",
                   "Arn",
                 ],
               },
@@ -329,6 +320,14 @@ Object {
         },
       },
       "Type": "AWS::IAM::Role",
+    },
+    "ValheimWorldValheimTaskDefinitionValheimContainerLogGroup9C64AB45": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "RetentionInDays": 1,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Retain",
     },
     "vpcA2121C38": Object {
       "Properties": Object {
