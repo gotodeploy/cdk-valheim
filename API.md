@@ -39,6 +39,9 @@ new ValheimWorld(scope: Construct, id: string, props?: ValheimWorldProps)
   * **environment** (<code>Map<string, string></code>)  https://github.com/lloesche/valheim-server-docker#environment-variables. __*Optional*__
   * **fileSystem** (<code>[FileSystem](#aws-cdk-aws-efs-filesystem)</code>)  *No description* __*Optional*__
   * **image** (<code>[ContainerImage](#aws-cdk-aws-ecs-containerimage)</code>)  *No description* __*Optional*__
+  * **logGroupName** (<code>string</code>)  valheim server log Group Name. __*Default*__: ValheimServer
+  * **logGroupRemovalPolicy** (<code>[RemovalPolicy](#aws-cdk-core-removalpolicy)</code>)  valheim server log Group RemovalPolicy. __*Default*__: RemovalPolicy.DESTROY
+  * **logsRetentionDays** (<code>[RetentionDays](#aws-cdk-aws-logs-retentiondays)</code>)  valheim server log Group RetentionDays. __*Default*__: RemovalPolicy.ONE_DAY
   * **memoryLimitMiB** (<code>number</code>)  The amount (in MiB) of memory used by the task. __*Default*__: 2048
   * **vpc** (<code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code>)  *No description* __*Optional*__
 
@@ -67,6 +70,9 @@ Name | Type | Description
 **environment**? | <code>Map<string, string></code> | https://github.com/lloesche/valheim-server-docker#environment-variables.<br/>__*Optional*__
 **fileSystem**? | <code>[FileSystem](#aws-cdk-aws-efs-filesystem)</code> | __*Optional*__
 **image**? | <code>[ContainerImage](#aws-cdk-aws-ecs-containerimage)</code> | __*Optional*__
+**logGroupName**? | <code>string</code> | valheim server log Group Name.<br/>__*Default*__: ValheimServer
+**logGroupRemovalPolicy**? | <code>[RemovalPolicy](#aws-cdk-core-removalpolicy)</code> | valheim server log Group RemovalPolicy.<br/>__*Default*__: RemovalPolicy.DESTROY
+**logsRetentionDays**? | <code>[RetentionDays](#aws-cdk-aws-logs-retentiondays)</code> | valheim server log Group RetentionDays.<br/>__*Default*__: RemovalPolicy.ONE_DAY
 **memoryLimitMiB**? | <code>number</code> | The amount (in MiB) of memory used by the task.<br/>__*Default*__: 2048
 **vpc**? | <code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code> | __*Optional*__
 

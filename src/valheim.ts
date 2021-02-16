@@ -2,7 +2,7 @@ import * as ec2 from '@aws-cdk/aws-ec2';
 import * as ecs from '@aws-cdk/aws-ecs';
 import * as efs from '@aws-cdk/aws-efs';
 import * as logs from '@aws-cdk/aws-logs';
-import { CfnOutput, Construct } from '@aws-cdk/core';
+import { CfnOutput, Construct, RemovalPolicy } from '@aws-cdk/core';
 
 export interface ValheimWorldProps {
   readonly vpc?: ec2.IVpc;
@@ -51,6 +51,25 @@ export interface ValheimWorldProps {
   readonly environment?: {
     [key: string]: string;
   };
+  /**
+   * valheim server log Group RemovalPolicy.
+   *
+   * @default - RemovalPolicy.DESTROY
+   */
+  readonly logGroupRemovalPolicy?: RemovalPolicy;
+
+  /**
+   * valheim server log Group RetentionDays.
+   *
+   * @default - RemovalPolicy.ONE_DAY
+   */
+  readonly logsRetentionDays?: logs.RetentionDays;
+  /**
+   * valheim server log Group Name.
+   *
+   * @default - ValheimServer
+   */
+  readonly logGroupName?: string;
 }
 
 
@@ -78,6 +97,13 @@ export class ValheimWorld extends Construct {
         fileSystemId: fileSystem.fileSystemId,
       },
     };
+    // Create the logGroup.
+    const logGroup = new logs.LogGroup(this, 'ValheimServer', {
+      logGroupName: props?.logGroupName ?? 'ValheimServer',
+      retention: props?.logsRetentionDays ?? logs.RetentionDays.ONE_DAY,
+      removalPolicy: props?.logGroupRemovalPolicy ?? RemovalPolicy.DESTROY,
+    });
+
     const taskDefinition = new ecs.FargateTaskDefinition(this, 'ValheimTaskDefinition', {
       family: 'valheim-world',
       volumes: [volumeConfig],
@@ -89,7 +115,7 @@ export class ValheimWorld extends Construct {
       image: props?.image ?? ecs.ContainerImage.fromRegistry('lloesche/valheim-server'),
       logging: new ecs.AwsLogDriver({
         streamPrefix: 'valheim',
-        logRetention: logs.RetentionDays.ONE_DAY,
+        logGroup: logGroup,
       }),
       environment: props?.environment,
     });
