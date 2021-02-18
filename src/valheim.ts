@@ -52,11 +52,11 @@ export interface ValheimWorldProps {
     [key: string]: string;
   };
   /**
-   * valheim server log Group.
+   * Valheim Server log Group.
    *
-   * @default - Create the new one for Valheim Server.
+   * @default - Create the new AWS Cloudwatch Log Group for Valheim Server.
    */
-  readonly logGroup?: logs.ILogGroup;
+  readonly logGroup?: ecs.AwsLogDriver;
 }
 
 
@@ -85,14 +85,6 @@ export class ValheimWorld extends Construct {
       },
     };
 
-    const awsLogDriverProps: ecs.AwsLogDriverProps = props?.logGroup ? {
-      streamPrefix: 'valheim',
-      logGroup: props?.logGroup,
-    }: {
-      streamPrefix: 'valheim',
-      logRetention: logs.RetentionDays.ONE_DAY,
-    };
-
     const taskDefinition = new ecs.FargateTaskDefinition(this, 'ValheimTaskDefinition', {
       family: 'valheim-world',
       volumes: [volumeConfig],
@@ -102,7 +94,10 @@ export class ValheimWorld extends Construct {
 
     const containerDefinition = taskDefinition.addContainer('ValheimContainer', {
       image: props?.image ?? ecs.ContainerImage.fromRegistry('lloesche/valheim-server'),
-      logging: new ecs.AwsLogDriver(awsLogDriverProps),
+      logging: props?.logGroup ?? new ecs.AwsLogDriver({
+        streamPrefix: 'valheim',
+        logRetention: logs.RetentionDays.ONE_DAY,
+      }),
       environment: props?.environment,
     });
     containerDefinition.addMountPoints(
