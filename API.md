@@ -39,6 +39,7 @@ new ValheimWorld(scope: Construct, id: string, props?: ValheimWorldProps)
   * **environment** (<code>Map<string, string></code>)  https://github.com/lloesche/valheim-server-docker#environment-variables. __*Optional*__
   * **fileSystem** (<code>[FileSystem](#aws-cdk-aws-efs-filesystem)</code>)  *No description* __*Optional*__
   * **image** (<code>[ContainerImage](#aws-cdk-aws-ecs-containerimage)</code>)  *No description* __*Optional*__
+  * **logGroup** (<code>[LogDriver](#aws-cdk-aws-ecs-logdriver)</code>)  Valheim Server log Group. __*Default*__: Create the new AWS Cloudwatch Log Group for Valheim Server.
   * **memoryLimitMiB** (<code>number</code>)  The amount (in MiB) of memory used by the task. __*Default*__: 2048
   * **vpc** (<code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code>)  *No description* __*Optional*__
 
@@ -67,6 +68,7 @@ Name | Type | Description
 **environment**? | <code>Map<string, string></code> | https://github.com/lloesche/valheim-server-docker#environment-variables.<br/>__*Optional*__
 **fileSystem**? | <code>[FileSystem](#aws-cdk-aws-efs-filesystem)</code> | __*Optional*__
 **image**? | <code>[ContainerImage](#aws-cdk-aws-ecs-containerimage)</code> | __*Optional*__
+**logGroup**? | <code>[LogDriver](#aws-cdk-aws-ecs-logdriver)</code> | Valheim Server log Group.<br/>__*Default*__: Create the new AWS Cloudwatch Log Group for Valheim Server.
 **memoryLimitMiB**? | <code>number</code> | The amount (in MiB) of memory used by the task.<br/>__*Default*__: 2048
 **vpc**? | <code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code> | __*Optional*__
 

@@ -51,6 +51,12 @@ export interface ValheimWorldProps {
   readonly environment?: {
     [key: string]: string;
   };
+  /**
+   * Valheim Server log Group.
+   *
+   * @default - Create the new AWS Cloudwatch Log Group for Valheim Server.
+   */
+  readonly logGroup?: ecs.LogDriver;
 }
 
 
@@ -78,6 +84,7 @@ export class ValheimWorld extends Construct {
         fileSystemId: fileSystem.fileSystemId,
       },
     };
+
     const taskDefinition = new ecs.FargateTaskDefinition(this, 'ValheimTaskDefinition', {
       family: 'valheim-world',
       volumes: [volumeConfig],
@@ -87,7 +94,7 @@ export class ValheimWorld extends Construct {
 
     const containerDefinition = taskDefinition.addContainer('ValheimContainer', {
       image: props?.image ?? ecs.ContainerImage.fromRegistry('lloesche/valheim-server'),
-      logging: new ecs.AwsLogDriver({
+      logging: props?.logGroup ?? new ecs.AwsLogDriver({
         streamPrefix: 'valheim',
         logRetention: logs.RetentionDays.ONE_DAY,
       }),
