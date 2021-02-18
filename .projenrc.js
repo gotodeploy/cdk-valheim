@@ -3,13 +3,14 @@ const { AwsCdkConstructLibrary } = require('projen');
 const project = new AwsCdkConstructLibrary({
   author: 'gotodeploy',
   authorAddress: '1491134+gotodeploy@users.noreply.github.com',
-  cdkVersion: '1.89.0',
+  cdkVersion: '1.90.0',
   defaultReleaseBranch: 'main',
   jsiiFqn: 'projen.AwsCdkConstructLibrary',
   name: 'cdk-valheim',
   repositoryUrl: 'https://github.com/gotodeploy/cdk-valheim.git',
   cdkDependencies: [
     '@aws-cdk/aws-applicationautoscaling',
+    '@aws-cdk/aws-backup',
     '@aws-cdk/aws-ec2',
     '@aws-cdk/aws-ecs',
     '@aws-cdk/aws-efs',
