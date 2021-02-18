@@ -56,7 +56,7 @@ export interface ValheimWorldProps {
    *
    * @default - Create the new AWS Cloudwatch Log Group for Valheim Server.
    */
-  readonly logGroup?: ecs.AwsLogDriver;
+  readonly logGroup?: ecs.LogDriver;
 }
 
 
