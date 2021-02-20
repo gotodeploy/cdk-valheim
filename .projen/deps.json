@@ -114,6 +114,11 @@
       "type": "peer"
     },
     {
+      "name": "@aws-cdk/aws-events",
+      "version": "^1.90.1",
+      "type": "peer"
+    },
+    {
       "name": "@aws-cdk/aws-logs",
       "version": "^1.90.1",
       "type": "peer"
@@ -150,6 +155,11 @@
     },
     {
       "name": "@aws-cdk/aws-efs",
+      "version": "^1.90.1",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-events",
       "version": "^1.90.1",
       "type": "runtime"
     },

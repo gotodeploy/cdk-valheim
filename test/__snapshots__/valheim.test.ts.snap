@@ -13,6 +13,113 @@ Object {
     "ValheimWorldValheimClusterE58CB7BF": Object {
       "Type": "AWS::ECS::Cluster",
     },
+    "ValheimWorldValheimSaveDataBackupPlan7ED7A75F": Object {
+      "Properties": Object {
+        "BackupPlan": Object {
+          "BackupPlanName": "ValheimSaveDataBackupPlan",
+          "BackupPlanRule": Array [
+            Object {
+              "Lifecycle": Object {
+                "DeleteAfterDays": 3,
+              },
+              "RuleName": "ValheimSaveDataBackupPlanRule0",
+              "ScheduleExpression": "cron(0 * * * ? *)",
+              "TargetBackupVault": Object {
+                "Fn::GetAtt": Array [
+                  "ValheimWorldValheimSaveDataBackupPlanVaultC0C5679F",
+                  "BackupVaultName",
+                ],
+              },
+            },
+          ],
+        },
+      },
+      "Type": "AWS::Backup::BackupPlan",
+    },
+    "ValheimWorldValheimSaveDataBackupPlanValheimBackupSelection03F0BAEF": Object {
+      "Properties": Object {
+        "BackupPlanId": Object {
+          "Fn::GetAtt": Array [
+            "ValheimWorldValheimSaveDataBackupPlan7ED7A75F",
+            "BackupPlanId",
+          ],
+        },
+        "BackupSelection": Object {
+          "IamRoleArn": Object {
+            "Fn::GetAtt": Array [
+              "ValheimWorldValheimSaveDataBackupPlanValheimBackupSelectionRole5593A2DB",
+              "Arn",
+            ],
+          },
+          "Resources": Array [
+            Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "arn:",
+                  Object {
+                    "Ref": "AWS::Partition",
+                  },
+                  ":elasticfilesystem:",
+                  Object {
+                    "Ref": "AWS::Region",
+                  },
+                  ":",
+                  Object {
+                    "Ref": "AWS::AccountId",
+                  },
+                  ":file-system/",
+                  Object {
+                    "Ref": "ValheimWorldValheimSaveDataEFSEF58E82E",
+                  },
+                ],
+              ],
+            },
+          ],
+          "SelectionName": "ValheimBackupSelection",
+        },
+      },
+      "Type": "AWS::Backup::BackupSelection",
+    },
+    "ValheimWorldValheimSaveDataBackupPlanValheimBackupSelectionRole5593A2DB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "backup.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSBackupServiceRolePolicyForBackup",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ValheimWorldValheimSaveDataBackupPlanVaultC0C5679F": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "BackupVaultName": "ValheimWorldValheimSaveDataBackupPlanVault0E342937",
+      },
+      "Type": "AWS::Backup::BackupVault",
+      "UpdateReplacePolicy": "Retain",
+    },
     "ValheimWorldValheimSaveDataEFSEF58E82E": Object {
       "DeletionPolicy": "Retain",
       "Properties": Object {

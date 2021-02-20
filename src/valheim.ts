@@ -1,12 +1,33 @@
+import * as backup from '@aws-cdk/aws-backup';
 import * as ec2 from '@aws-cdk/aws-ec2';
 import * as ecs from '@aws-cdk/aws-ecs';
 import * as efs from '@aws-cdk/aws-efs';
+import * as events from '@aws-cdk/aws-events';
 import * as logs from '@aws-cdk/aws-logs';
-import { CfnOutput, Construct } from '@aws-cdk/core';
+import * as cdk from '@aws-cdk/core';
 
 export interface ValheimWorldProps {
+  /**
+   * The VPC where your ECS instances will be running or your ENIs will be deployed.
+   *
+   * @default - creates a new VPC with two AZs
+   */
   readonly vpc?: ec2.IVpc;
+
+  /**
+   * Persistent storage for save data.
+   *
+   * @default - Amazon EFS for default persistent storage.
+   */
   readonly fileSystem?: efs.FileSystem;
+
+  /**
+   * AWS Backup plan for EFS.
+   *
+   * @default - Hourly backup with 3 days retension.
+   */
+  readonly backupPlan?: backup.BackupPlan;
+
   readonly image?: ecs.ContainerImage;
   /**
    * The number of cpu units used by the task. For tasks using the Fargate launch type,
@@ -43,6 +64,12 @@ export interface ValheimWorldProps {
    * @default 2048
    */
   readonly memoryLimitMiB?: number;
+
+  /**
+   * Desired count of Fargate container. Set 0 for maintenance.
+   *
+   * @default - 1
+   */
   readonly desiredCount?: number;
 
   /**
@@ -60,10 +87,12 @@ export interface ValheimWorldProps {
 }
 
 
-export class ValheimWorld extends Construct {
+export class ValheimWorld extends cdk.Construct {
   public service: ecs.FargateService;
+  public fileSystem: efs.FileSystem;
+  public backupPlan: backup.BackupPlan;
 
-  constructor(scope: Construct, id: string, props?: ValheimWorldProps) {
+  constructor(scope: cdk.Construct, id: string, props?: ValheimWorldProps) {
     super(scope, id);
 
     const vpc = props?.vpc ?? ec2.Vpc.fromLookup(this, 'DefaultVpc', {
@@ -72,16 +101,17 @@ export class ValheimWorld extends Construct {
 
     const cluster = new ecs.Cluster(this, 'ValheimCluster', { vpc });
 
-    // Create the file system
-    const fileSystem = props?.fileSystem ?? new efs.FileSystem(this, 'ValheimSaveDataEFS', {
+    this.fileSystem = props?.fileSystem ?? new efs.FileSystem(this, 'ValheimSaveDataEFS', {
       vpc,
       lifecyclePolicy: efs.LifecyclePolicy.AFTER_14_DAYS,
     });
 
+    this.backupPlan = props?.backupPlan ?? this.defaultBackupPlan();
+
     const volumeConfig = {
       name: 'valheim-save-data',
       efsVolumeConfiguration: {
-        fileSystemId: fileSystem.fileSystemId,
+        fileSystemId: this.fileSystem.fileSystemId,
       },
     };
 
@@ -117,14 +147,30 @@ export class ValheimWorld extends Construct {
     });
 
     // Allow TCP 2049 for EFS
-    this.service.connections.allowFrom(fileSystem, ec2.Port.tcp(2049));
-    this.service.connections.allowTo(fileSystem, ec2.Port.tcp(2049));
+    this.service.connections.allowFrom(this.fileSystem, ec2.Port.tcp(2049));
+    this.service.connections.allowTo(this.fileSystem, ec2.Port.tcp(2049));
 
     // Allow UDP 2456-2458 for Valheim
     this.service.connections.allowFrom(ec2.Peer.anyIpv4(), ec2.Port.udpRange(2456, 2458));
 
-    new CfnOutput(this, 'ValheimServiceArn', {
+    new cdk.CfnOutput(this, 'ValheimServiceArn', {
       value: this.service.serviceArn,
     });
+  }
+
+  // Default backup plan runs every hour
+  private defaultBackupPlan(): backup.BackupPlan {
+    const backupPlan = new backup.BackupPlan(this, 'ValheimSaveDataBackupPlan');
+    backupPlan.addSelection('ValheimBackupSelection', {
+      resources: [backup.BackupResource.fromEfsFileSystem(this.fileSystem)],
+    });
+    backupPlan.addRule(new backup.BackupPlanRule({
+      deleteAfter: cdk.Duration.days(3),
+      scheduleExpression: events.Schedule.cron({
+        minute: '0',
+      }),
+    }));
+
+    return backupPlan;
   }
 }
