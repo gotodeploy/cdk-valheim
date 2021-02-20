@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/gotodeploy/cdk-valheim/compare/v0.0.7...v0.0.8) (2021-02-20)
+
+
+### Features
+
+* Add AWS backup for EFS ([6294e11](https://github.com/gotodeploy/cdk-valheim/commit/6294e116ef4aac87235c49e415621407ee69bc65))
+
 ### [0.0.7](https://github.com/gotodeploy/cdk-valheim/compare/v0.0.6...v0.0.7) (2021-02-20)
 
 ### [0.0.6](https://github.com/gotodeploy/cdk-valheim/compare/v0.0.3...v0.0.6) (2021-02-18)
