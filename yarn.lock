@@ -316,7 +316,7 @@
     "@aws-cdk/region-info" "1.90.1"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-events@1.90.1":
+"@aws-cdk/aws-events@1.90.1", "@aws-cdk/aws-events@^1.90.1":
   version "1.90.1"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-events/-/aws-events-1.90.1.tgz#c8be833c1d87d74ebec2cc48df969975534b2bcf"
   integrity sha512-wysfuLyL+L45XqR6Fnb0Jih3YktXs7fo0QYp/bNEMIBG3gXaK2k1mVceMWFxG/NGBwf+lD4rD5t3E3G8C1DVbQ==

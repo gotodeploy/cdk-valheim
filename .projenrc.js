@@ -14,6 +14,7 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/aws-ec2',
     '@aws-cdk/aws-ecs',
     '@aws-cdk/aws-efs',
+    '@aws-cdk/aws-events',
     '@aws-cdk/aws-logs',
     '@aws-cdk/core',
   ],
