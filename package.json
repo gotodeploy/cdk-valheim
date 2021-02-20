@@ -121,7 +121,12 @@
   "stability": "stable",
   "jsii": {
     "outdir": "dist",
-    "targets": {},
+    "targets": {
+      "python": {
+        "distName": "cdk-valheim",
+        "module": "cdk_valheim"
+      }
+    },
     "tsc": {
       "outDir": "lib",
       "rootDir": "src"

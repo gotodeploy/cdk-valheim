@@ -23,6 +23,10 @@ const project = new AwsCdkConstructLibrary({
     'cdk.context.json',
     'cdk.out/',
   ],
+  python: {
+    distName: 'cdk-valheim',
+    module: 'cdk_valheim',
+  },
 
   /* AwsCdkConstructLibraryOptions */
   // cdkAssert: true,                                                          /* Install the @aws-cdk/assert library? */
