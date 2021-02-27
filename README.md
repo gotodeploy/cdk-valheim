@@ -12,20 +12,26 @@ See [API.md](API.md)
 new ValheimWorld(stack, 'ValheimWorld', {
   cpu: 2048,
   memoryLimitMiB: 4096,
+  schedules: [{
+    startAt: { hour: '12', weekDay: '0-3' },
+    stopAt: { hour: '1', weekDay: '0-3' },
+  }],
   environment: {
     SERVER_NAME: 'CDK Valheim',
     WORLD_NAME: 'Amazon',
     SERVER_PASS: 'fargate',
-    // SERVER_PUBLIC: 1,
-    // UPDATE_INTERVAL: 900,
-    // BACKUPS_INTERVAL: 3600,
+    BACKUPS: 'false',
+    // SERVER_PORT: '2456',
+    // SERVER_PUBLIC: 'true',
+    // UPDATE_CRON: '*/15 * * * *',
+    // RESTART_CRON: '0 5 * * *',
+    // TZ: 'Etc/UTC',
+    // BACKUPS_CRON: '0 * * * *',
     // BACKUPS_DIRECTORY: '/config/backups',
-    // BACKUPS_MAX_AGE: 3,
-    // BACKUPS_DIRECTORY_PERMISSIONS: 755,
-    // BACKUPS_FILE_PERMISSIONS: 644,
-    // CONFIG_DIRECTORY_PERMISSIONS: 755,
-    // WORLDS_DIRECTORY_PERMISSIONS: 755,
-    // WORLDS_FILE_PERMISSIONS: 644,
+    // BACKUPS_MAX_AGE: '3',
+    // PERMISSIONS_UMASK: '022',
+    // STEAMCMD_ARGS: 'validate',
+    // VALHEIM_PLUS: 'false',
   },
 });
 ```
@@ -35,7 +41,7 @@ new ValheimWorld(stack, 'ValheimWorld', {
 * Snapshot
 
 ```sh
-yarn test
+npx projen test
 ```
 
 * Integration
