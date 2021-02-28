@@ -1,3 +1,4 @@
+import * as appscaling from '@aws-cdk/aws-applicationautoscaling';
 import * as backup from '@aws-cdk/aws-backup';
 import * as ec2 from '@aws-cdk/aws-ec2';
 import * as ecs from '@aws-cdk/aws-ecs';
@@ -5,6 +6,29 @@ import * as efs from '@aws-cdk/aws-efs';
 import * as events from '@aws-cdk/aws-events';
 import * as logs from '@aws-cdk/aws-logs';
 import * as cdk from '@aws-cdk/core';
+
+/**
+ * Options for ValheimWorldScalingSchedule.
+ */
+export interface ValheimWorldScalingScheduleProps {
+  /**
+   * Options to configure a cron expression for server for server launching schedule.
+   *
+   * All fields are strings so you can use complex expressions. Absence of
+   * a field implies '*' or '?', whichever one is appropriate. Only comma
+   * separated numbers and hypens are allowed.
+   */
+  readonly startAt: appscaling.CronOptions;
+
+  /**
+   * Options to configure a cron expression for server zero-scale schedule.
+   *
+   * All fields are strings so you can use complex expressions. Absence of
+   * a field implies '*' or '?', whichever one is appropriate. Only comma
+   * separated numbers and hypens are allowed.
+   */
+  readonly stopAt: appscaling.CronOptions;
+}
 
 export interface ValheimWorldProps {
   /**
@@ -78,19 +102,137 @@ export interface ValheimWorldProps {
   readonly environment?: {
     [key: string]: string;
   };
+
   /**
    * Valheim Server log Group.
    *
    * @default - Create the new AWS Cloudwatch Log Group for Valheim Server.
    */
   readonly logGroup?: ecs.LogDriver;
+
+  /**
+   * Running schedules.
+   *
+   * @default - Always running.
+   */
+  readonly schedules?: ValheimWorldScalingScheduleProps[];
 }
 
+/**
+ * Represents the schedule to determine when the server starts or terminates.
+ */
+export class ValheimWorldScalingSchedule {
+  private static range(start: number, stop: number) {
+    return Array.from(
+      { length: (stop - start) + 1 }, (_, i) => start + i);
+  }
+
+  private static toIntArraySorted(expression: string, allowedRange: number[]): Uint8Array {
+    const flat = (nested: any[]) => [].concat(...nested);
+
+    return Uint8Array.from(
+      flat(
+        expression
+          .split(',')
+          .map(chunk => {
+            const rangeChunk = chunk.split('-');
+            if (rangeChunk.length == 2) {
+              return allowedRange.slice(
+                parseInt(rangeChunk[0], 10),
+                parseInt(rangeChunk[1], 10) + 1,
+              );
+            }
+            return parseInt(chunk, 10);
+          }),
+      ),
+    ).sort();
+  }
+
+  /**
+   * Options to configure a cron expression for server for server launching schedule.
+   *
+   * All fields are strings so you can use complex expressions. Absence of
+   * a field implies '*' or '?', whichever one is appropriate. Only comma
+   * separated numbers and hypens are allowed.
+   */
+  public readonly startAt: appscaling.CronOptions;
+
+  /**
+   * Options to configure a cron expression for server zero-scale schedule.
+   *
+   * All fields are strings so you can use complex expressions. Absence of
+   * a field implies '*' or '?', whichever one is appropriate. Only comma
+   * separated numbers and hypens are allowed.
+   */
+  public readonly stopAt: appscaling.CronOptions;
+
+  constructor(schedule: ValheimWorldScalingScheduleProps) {
+    this.startAt = schedule.startAt;
+    this.stopAt = schedule.stopAt;
+  }
+
+  private toCron(propertyName: string, maxRange: number, start?: string, stop?: string): string | undefined {
+    if (typeof start === 'undefined' && typeof stop === 'undefined') {
+      return undefined;
+    }
+
+    if (typeof start === 'undefined' || typeof stop === 'undefined') {
+      throw new Error(`The property "${propertyName}" must be set for both startAt and endAt.`);
+    }
+
+    const regex = new RegExp(/^$|[^\d\-,]+/);
+    if (regex.test(start) || regex.test(stop)) {
+      throw new Error(`The property "${propertyName}" is only allowed to use numbers, hypens and commas.`);
+    }
+
+    const allowedRange = ValheimWorldScalingSchedule.range(0, maxRange);
+    let from = ValheimWorldScalingSchedule.toIntArraySorted(start, allowedRange);
+    let to = ValheimWorldScalingSchedule.toIntArraySorted(stop, allowedRange);
+
+    if (from.length != to.length) {
+      throw new Error('The lengths of both startAt and endAt properties must be exactly the same.');
+    }
+
+    if (from[0] > to[0]) {
+      return `${from[0]}-${maxRange},0-${to[0]}`;
+    }
+
+    let cronExpression: string[] = [];
+    from.forEach((n, i) => {
+      if (n == to[i]) {
+        cronExpression.push(n.toString());
+      } else {
+        cronExpression.push(`${n}-${to[i]}`);
+      }
+    });
+
+    return [...new Set([...cronExpression])].join(',');
+  }
+
+  private toCronHour(): string | undefined {
+    return this.toCron('hour', 23, this.startAt.hour, this.stopAt.hour);
+  }
+
+  private toCronWeekDay(): string | undefined {
+    return this.toCron('weekDay', 6, this.startAt.weekDay, this.stopAt.weekDay);
+  }
+
+  /**
+   * Returns the cron option merged both startAt and endAt.
+   */
+  public toCronOptions(): appscaling.CronOptions {
+    return {
+      hour: this.toCronHour(),
+      weekDay: this.toCronWeekDay(),
+    };
+  }
+}
 
 export class ValheimWorld extends cdk.Construct {
-  public service: ecs.FargateService;
-  public fileSystem: efs.FileSystem;
   public backupPlan: backup.BackupPlan;
+  public fileSystem: efs.FileSystem;
+  public schedules?: ValheimWorldScalingSchedule[];
+  public service: ecs.FargateService;
 
   constructor(scope: cdk.Construct, id: string, props?: ValheimWorldProps) {
     super(scope, id);
@@ -105,8 +247,6 @@ export class ValheimWorld extends cdk.Construct {
       vpc,
       lifecyclePolicy: efs.LifecyclePolicy.AFTER_14_DAYS,
     });
-
-    this.backupPlan = props?.backupPlan ?? this.defaultBackupPlan();
 
     const volumeConfig = {
       name: 'valheim-save-data',
@@ -143,7 +283,7 @@ export class ValheimWorld extends cdk.Construct {
       platformVersion: ecs.FargatePlatformVersion.VERSION1_4,
       assignPublicIp: true,
       taskDefinition,
-      desiredCount: props?.desiredCount ?? 1,
+      desiredCount: props?.desiredCount,
     });
 
     // Allow TCP 2049 for EFS
@@ -152,6 +292,30 @@ export class ValheimWorld extends cdk.Construct {
 
     // Allow UDP 2456-2458 for Valheim
     this.service.connections.allowFrom(ec2.Peer.anyIpv4(), ec2.Port.udpRange(2456, 2458));
+
+    if (props?.schedules != null) {
+      let schedules: ValheimWorldScalingSchedule[] = [];
+      const capacity = props?.desiredCount ?? 1;
+      const taskCount = this.service.autoScaleTaskCount({
+        maxCapacity: capacity,
+      });
+      props?.schedules.forEach((schedule, index) => {
+        taskCount.scaleOnSchedule(`ValheimWorldStartAt${index}`, {
+          schedule: appscaling.Schedule.cron(schedule.startAt),
+          minCapacity: capacity,
+          maxCapacity: capacity,
+        });
+        taskCount.scaleOnSchedule(`ValheimWorldStopAt${index}`, {
+          schedule: appscaling.Schedule.cron(schedule.stopAt),
+          minCapacity: 0,
+          maxCapacity: 0,
+        });
+        schedules.push(new ValheimWorldScalingSchedule(schedule));
+      });
+      this.schedules = schedules;
+    }
+
+    this.backupPlan = props?.backupPlan ?? this.defaultBackupPlan();
 
     new cdk.CfnOutput(this, 'ValheimServiceArn', {
       value: this.service.serviceArn,
@@ -164,13 +328,13 @@ export class ValheimWorld extends cdk.Construct {
     backupPlan.addSelection('ValheimBackupSelection', {
       resources: [backup.BackupResource.fromEfsFileSystem(this.fileSystem)],
     });
-    backupPlan.addRule(new backup.BackupPlanRule({
-      deleteAfter: cdk.Duration.days(3),
-      scheduleExpression: events.Schedule.cron({
-        minute: '0',
-      }),
-    }));
-
+    const defaultSchedule = { toCronOptions: () => { return { minute: '0' }; } };
+    for (const schedule of this.schedules ?? [defaultSchedule]) {
+      backupPlan.addRule(new backup.BackupPlanRule({
+        deleteAfter: cdk.Duration.days(3),
+        scheduleExpression: events.Schedule.cron(schedule.toCronOptions()),
+      }));
+    }
     return backupPlan;
   }
 }

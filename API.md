@@ -5,6 +5,7 @@
 Name|Description
 ----|-----------
 [ValheimWorld](#cdk-valheim-valheimworld)|*No description*
+[ValheimWorldScalingSchedule](#cdk-valheim-valheimworldscalingschedule)|Represents the schedule to determine when the server starts or terminates.
 
 
 **Structs**
@@ -12,6 +13,7 @@ Name|Description
 Name|Description
 ----|-----------
 [ValheimWorldProps](#cdk-valheim-valheimworldprops)|*No description*
+[ValheimWorldScalingScheduleProps](#cdk-valheim-valheimworldscalingscheduleprops)|Options for ValheimWorldScalingSchedule.
 
 
 
@@ -42,6 +44,7 @@ new ValheimWorld(scope: Construct, id: string, props?: ValheimWorldProps)
   * **image** (<code>[ContainerImage](#aws-cdk-aws-ecs-containerimage)</code>)  *No description* __*Optional*__
   * **logGroup** (<code>[LogDriver](#aws-cdk-aws-ecs-logdriver)</code>)  Valheim Server log Group. __*Default*__: Create the new AWS Cloudwatch Log Group for Valheim Server.
   * **memoryLimitMiB** (<code>number</code>)  The amount (in MiB) of memory used by the task. __*Default*__: 2048
+  * **schedules** (<code>Array<[ValheimWorldScalingScheduleProps](#cdk-valheim-valheimworldscalingscheduleprops)></code>)  Running schedules. __*Default*__: Always running.
   * **vpc** (<code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code>)  The VPC where your ECS instances will be running or your ENIs will be deployed. __*Default*__: creates a new VPC with two AZs
 
 
@@ -54,6 +57,52 @@ Name | Type | Description
 **backupPlan** | <code>[BackupPlan](#aws-cdk-aws-backup-backupplan)</code> | <span></span>
 **fileSystem** | <code>[FileSystem](#aws-cdk-aws-efs-filesystem)</code> | <span></span>
 **service** | <code>[FargateService](#aws-cdk-aws-ecs-fargateservice)</code> | <span></span>
+**schedules**? | <code>Array<[ValheimWorldScalingSchedule](#cdk-valheim-valheimworldscalingschedule)></code> | __*Optional*__
+
+
+
+## class ValheimWorldScalingSchedule  <a id="cdk-valheim-valheimworldscalingschedule"></a>
+
+Represents the schedule to determine when the server starts or terminates.
+
+
+### Initializer
+
+
+
+
+```ts
+new ValheimWorldScalingSchedule(schedule: ValheimWorldScalingScheduleProps)
+```
+
+* **schedule** (<code>[ValheimWorldScalingScheduleProps](#cdk-valheim-valheimworldscalingscheduleprops)</code>)  *No description*
+  * **startAt** (<code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code>)  Options to configure a cron expression for server for server launching schedule. 
+  * **stopAt** (<code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code>)  Options to configure a cron expression for server zero-scale schedule. 
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**startAt** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server for server launching schedule.
+**stopAt** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server zero-scale schedule.
+
+### Methods
+
+
+#### toCronOptions() <a id="cdk-valheim-valheimworldscalingschedule-tocronoptions"></a>
+
+Returns the cron option merged both startAt and endAt.
+
+```ts
+toCronOptions(): CronOptions
+```
+
+
+__Returns__:
+* <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code>
 
 
 
@@ -74,7 +123,22 @@ Name | Type | Description
 **image**? | <code>[ContainerImage](#aws-cdk-aws-ecs-containerimage)</code> | __*Optional*__
 **logGroup**? | <code>[LogDriver](#aws-cdk-aws-ecs-logdriver)</code> | Valheim Server log Group.<br/>__*Default*__: Create the new AWS Cloudwatch Log Group for Valheim Server.
 **memoryLimitMiB**? | <code>number</code> | The amount (in MiB) of memory used by the task.<br/>__*Default*__: 2048
+**schedules**? | <code>Array<[ValheimWorldScalingScheduleProps](#cdk-valheim-valheimworldscalingscheduleprops)></code> | Running schedules.<br/>__*Default*__: Always running.
 **vpc**? | <code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code> | The VPC where your ECS instances will be running or your ENIs will be deployed.<br/>__*Default*__: creates a new VPC with two AZs
+
+
+
+## struct ValheimWorldScalingScheduleProps  <a id="cdk-valheim-valheimworldscalingscheduleprops"></a>
+
+
+Options for ValheimWorldScalingSchedule.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**startAt** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server for server launching schedule.
+**stopAt** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server zero-scale schedule.
 
 
 
