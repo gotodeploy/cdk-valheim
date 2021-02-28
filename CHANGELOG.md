@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/gotodeploy/cdk-valheim/compare/v0.0.9...v0.0.10) (2021-02-28)
+
+
+### Features
+
+* Support scaleIn and scaleOut scheduling ([5b032c4](https://github.com/gotodeploy/cdk-valheim/commit/5b032c4a13fdcef4b3853b826c976fc54b64b139))
+
 ### [0.0.9](https://github.com/gotodeploy/cdk-valheim/compare/v0.0.8...v0.0.9) (2021-02-20)
 
 ### [0.0.8](https://github.com/gotodeploy/cdk-valheim/compare/v0.0.7...v0.0.8) (2021-02-20)
