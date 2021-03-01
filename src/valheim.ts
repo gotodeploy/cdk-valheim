@@ -52,7 +52,24 @@ export interface ValheimWorldProps {
    */
   readonly backupPlan?: backup.BackupPlan;
 
+  /**
+   * The image used to start a container.
+   *
+   * This string is passed directly to the Docker daemon.
+   * Images in the Docker Hub registry are available by default.
+   * Other repositories are specified with either repository-url/image:tag or repository-url/image@digest.
+   *
+   * @default - [lloesche/valheim-server](https://hub.docker.com/r/lloesche/valheim-server)
+   */
   readonly image?: ecs.ContainerImage;
+
+  /**
+   * The path on the container to mount the host volume at.
+   *
+   * @default - /config/
+   */
+  readonly containerPath?: string;
+
   /**
    * The number of cpu units used by the task. For tasks using the Fargate launch type,
    * this field is required and you must use one of the following values,
@@ -97,7 +114,9 @@ export interface ValheimWorldProps {
   readonly desiredCount?: number;
 
   /**
-   * https://github.com/lloesche/valheim-server-docker#environment-variables
+   * The environment variables to pass to the container.
+   *
+   * @default - No environment variables.
    */
   readonly environment?: {
     [key: string]: string;
@@ -272,7 +291,7 @@ export class ValheimWorld extends cdk.Construct {
     });
     containerDefinition.addMountPoints(
       {
-        containerPath: '/config/',
+        containerPath: props?.containerPath ?? '/config/',
         sourceVolume: volumeConfig.name,
         readOnly: false,
       },
