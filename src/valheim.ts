@@ -123,8 +123,7 @@ export interface ValheimWorldProps {
  */
 export class ValheimWorldScalingSchedule {
   private static range(start: number, stop: number) {
-    return Array.from(
-      { length: (stop - start) + 1 }, (_, i) => start + i);
+    return Array.from({ length: (stop - start) + 1 }, (_, i) => start + i);
   }
 
   private static toIntArraySorted(expression: string, allowedRange: number[]): Uint8Array {
@@ -138,8 +137,8 @@ export class ValheimWorldScalingSchedule {
             const rangeChunk = chunk.split('-');
             if (rangeChunk.length == 2) {
               return allowedRange.slice(
-                parseInt(rangeChunk[0], 10),
-                parseInt(rangeChunk[1], 10) + 1,
+                allowedRange.findIndex((n) => n == parseInt(rangeChunk[0], 10)),
+                allowedRange.findIndex((n) => n == parseInt(rangeChunk[1], 10)) + 1,
               );
             }
             return parseInt(chunk, 10);
@@ -171,7 +170,7 @@ export class ValheimWorldScalingSchedule {
     this.stop = schedule.stop;
   }
 
-  private toCron(propertyName: string, maxRange: number, start?: string, stop?: string): string | undefined {
+  private toCron(propertyName: string, minRange: number, maxRange: number, start?: string, stop?: string): string | undefined {
     if (typeof start === 'undefined' && typeof stop === 'undefined') {
       return undefined;
     }
@@ -185,7 +184,7 @@ export class ValheimWorldScalingSchedule {
       throw new Error(`The property "${propertyName}" is only allowed to use numbers, hypens and commas.`);
     }
 
-    const allowedRange = ValheimWorldScalingSchedule.range(0, maxRange);
+    const allowedRange = ValheimWorldScalingSchedule.range(minRange, maxRange);
     let from = ValheimWorldScalingSchedule.toIntArraySorted(start, allowedRange);
     let to = ValheimWorldScalingSchedule.toIntArraySorted(stop, allowedRange);
 
@@ -194,7 +193,7 @@ export class ValheimWorldScalingSchedule {
     }
 
     if (from[0] > to[0]) {
-      return `${from[0]}-${maxRange},0-${to[0]}`;
+      return `${from[0]}-${maxRange},${minRange}-${to[0]}`;
     }
 
     let cronExpression: string[] = [];
@@ -210,11 +209,11 @@ export class ValheimWorldScalingSchedule {
   }
 
   private toCronHour(): string | undefined {
-    return this.toCron('hour', 23, this.start.hour, this.stop.hour);
+    return this.toCron('hour', 0, 23, this.start.hour, this.stop.hour);
   }
 
   private toCronWeekDay(): string | undefined {
-    return this.toCron('weekDay', 6, this.start.weekDay, this.stop.weekDay);
+    return this.toCron('weekDay', 1, 7, this.start.weekDay, this.stop.weekDay);
   }
 
   /**
@@ -224,6 +223,7 @@ export class ValheimWorldScalingSchedule {
     return {
       hour: this.toCronHour(),
       weekDay: this.toCronWeekDay(),
+      minute: '0',
     };
   }
 }

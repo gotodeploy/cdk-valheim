@@ -13,8 +13,8 @@ new ValheimWorld(stack, 'ValheimWorld', {
   cpu: 2048,
   memoryLimitMiB: 4096,
   schedules: [{
-    startAt: { hour: '12', weekDay: '0-3' },
-    stopAt: { hour: '1', weekDay: '0-3' },
+    start: { hour: '12', weekDay: '1-5' },
+    stop: { hour: '1', weekDay: '1-5' },
   }],
   environment: {
     SERVER_NAME: 'CDK Valheim',
