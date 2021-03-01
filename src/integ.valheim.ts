@@ -1,3 +1,4 @@
+import * as ecs from '@aws-cdk/aws-ecs';
 import { App, Stack } from '@aws-cdk/core';
 import { ValheimWorld } from './index';
 
@@ -10,6 +11,8 @@ const app = new App();
 const stack = new Stack(app, 'ValheimStack', { env });
 
 new ValheimWorld(stack, 'ValheimWorld', {
+  image: ecs.ContainerImage.fromRegistry('mbround18/valheim'),
+  containerPath: '/home/steam/.config/unity3d/IronGate/Valheim',
   // Warning: It's UTC.
   schedules: [{
     start: { hour: '12', weekDay: '1-4' },
@@ -26,8 +29,9 @@ new ValheimWorld(stack, 'ValheimWorld', {
     stop: { weekDay: '1' },
   }],
   environment: {
-    SERVER_NAME: 'CDK Valheim',
-    WORLD_NAME: 'Amazon',
-    SERVER_PASS: 'fargate',
+    PORT: '2456',
+    NAME: 'CDK Valheim',
+    WORLD: 'Amazon',
+    PASSWORD: 'fargate',
   },
 });
