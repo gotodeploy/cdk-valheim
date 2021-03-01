@@ -32,7 +32,7 @@ ${'4-6'}   | ${[0, 1, 2, 3, 4, 5, 6]}  | ${Uint8Array.from([4, 5, 6])}
 });
 
 test.each`
-startAt                 | stopAt                  | expected
+start                   | stop                    | expected
 ${{ hour: undefined }}  | ${{ hour: undefined }}  | ${{}}
 ${{ hour: '0' }}        | ${{ hour: '9' }}        | ${{ hour: '0-9' }}
 ${{ hour: '15' }}       | ${{ hour: '3' }}        | ${{ hour: '15-23,0-3' }}
@@ -43,13 +43,13 @@ ${{ weekDay: '0,3' }}   | ${{ weekDay: '0,3' }}   | ${{ weekDay: '0,3' }}
 ${{ weekDay: '0-4' }}   | ${{ weekDay: '0-4' }}   | ${{ weekDay: '0,1,2,3,4' }}
 ${{ weekDay: '0,3-5' }} | ${{ weekDay: '0,3-5' }} | ${{ weekDay: '0,3,4,5' }}
 ${{ weekDay: '5' }}     | ${{ weekDay: '0' }}     | ${{ weekDay: '5-6,0-0' }}
-`('Combines $startAt and $stopAt to generate $expected crontab string', ({ startAt, stopAt, expected }) => {
-  const schedule = new ValheimWorldScalingSchedule({ startAt, stopAt });
+`('Combines $start and $stop to generate $expected crontab string', ({ start, stop, expected }) => {
+  const schedule = new ValheimWorldScalingSchedule({ start, stop });
   expect(schedule.toCronOptions()).toEqual(expected);
 });
 
 test.each`
-startAt                         | stopAt
+start                           | stop
 ${{ hour: undefined }}          | ${{ hour: '9' }}
 ${{ hour: '9' }}                | ${{ hour: undefined }}
 ${{ minute: '0', second: '0' }} | ${{ hour: '9' }}
@@ -58,8 +58,8 @@ ${{ hour: 'a' }}                | ${{ hour: '9' }}
 ${{ hour: '0/1' }}              | ${{ hour: '9' }}
 ${{ hour: '0' }}                | ${{ hour: '9-18' }}
 ${{ hour: '0' }}                | ${{ hour: '9,10' }}
-`('Invalid $startAt and $stopAt causes Error', ({ startAt, stopAt }) => {
-  const schedule = new ValheimWorldScalingSchedule({ startAt, stopAt });
+`('Invalid $start and $stop causes Error', ({ start, stop }) => {
+  const schedule = new ValheimWorldScalingSchedule({ start: start, stop });
   expect(() => {
     schedule.toCronOptions();
   }).toThrow();

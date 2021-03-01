@@ -12,18 +12,18 @@ const stack = new Stack(app, 'ValheimStack', { env });
 new ValheimWorld(stack, 'ValheimWorld', {
   // Warning: It's UTC.
   schedules: [{
-    startAt: { hour: '12', weekDay: '0-3' },
-    stopAt: { hour: '1', weekDay: '0-3' },
+    start: { hour: '12', weekDay: '0-3' },
+    stop: { hour: '1', weekDay: '0-3' },
   },
   // It's friday night ;)
   {
-    startAt: { hour: '12', weekDay: '4' },
-    stopAt: { hour: '4', weekDay: '4' },
+    start: { hour: '12', weekDay: '4' },
+    stop: { hour: '4', weekDay: '4' },
   },
   // It's weekend.
   {
-    startAt: { weekDay: '5' },
-    stopAt: { weekDay: '0' },
+    start: { weekDay: '5' },
+    stop: { weekDay: '0' },
   }],
   environment: {
     SERVER_NAME: 'CDK Valheim',

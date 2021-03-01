@@ -76,8 +76,8 @@ new ValheimWorldScalingSchedule(schedule: ValheimWorldScalingScheduleProps)
 ```
 
 * **schedule** (<code>[ValheimWorldScalingScheduleProps](#cdk-valheim-valheimworldscalingscheduleprops)</code>)  *No description*
-  * **startAt** (<code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code>)  Options to configure a cron expression for server for server launching schedule. 
-  * **stopAt** (<code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code>)  Options to configure a cron expression for server zero-scale schedule. 
+  * **start** (<code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code>)  Options to configure a cron expression for server for server launching schedule. 
+  * **stop** (<code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code>)  Options to configure a cron expression for server zero-scale schedule. 
 
 
 
@@ -86,15 +86,15 @@ new ValheimWorldScalingSchedule(schedule: ValheimWorldScalingScheduleProps)
 
 Name | Type | Description 
 -----|------|-------------
-**startAt** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server for server launching schedule.
-**stopAt** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server zero-scale schedule.
+**start** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server for server launching schedule.
+**stop** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server zero-scale schedule.
 
 ### Methods
 
 
 #### toCronOptions() <a id="cdk-valheim-valheimworldscalingschedule-tocronoptions"></a>
 
-Returns the cron option merged both startAt and endAt.
+Returns the cron options merged properties for both start and stop.
 
 ```ts
 toCronOptions(): CronOptions
@@ -137,8 +137,8 @@ Options for ValheimWorldScalingSchedule.
 
 Name | Type | Description 
 -----|------|-------------
-**startAt** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server for server launching schedule.
-**stopAt** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server zero-scale schedule.
+**start** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server for server launching schedule.
+**stop** | <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code> | Options to configure a cron expression for server zero-scale schedule.
 
 
 
