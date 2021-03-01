@@ -18,7 +18,7 @@ export interface ValheimWorldScalingScheduleProps {
    * a field implies '*' or '?', whichever one is appropriate. Only comma
    * separated numbers and hypens are allowed.
    */
-  readonly startAt: appscaling.CronOptions;
+  readonly start: appscaling.CronOptions;
 
   /**
    * Options to configure a cron expression for server zero-scale schedule.
@@ -27,7 +27,7 @@ export interface ValheimWorldScalingScheduleProps {
    * a field implies '*' or '?', whichever one is appropriate. Only comma
    * separated numbers and hypens are allowed.
    */
-  readonly stopAt: appscaling.CronOptions;
+  readonly stop: appscaling.CronOptions;
 }
 
 export interface ValheimWorldProps {
@@ -155,7 +155,7 @@ export class ValheimWorldScalingSchedule {
    * a field implies '*' or '?', whichever one is appropriate. Only comma
    * separated numbers and hypens are allowed.
    */
-  public readonly startAt: appscaling.CronOptions;
+  public readonly start: appscaling.CronOptions;
 
   /**
    * Options to configure a cron expression for server zero-scale schedule.
@@ -164,11 +164,11 @@ export class ValheimWorldScalingSchedule {
    * a field implies '*' or '?', whichever one is appropriate. Only comma
    * separated numbers and hypens are allowed.
    */
-  public readonly stopAt: appscaling.CronOptions;
+  public readonly stop: appscaling.CronOptions;
 
   constructor(schedule: ValheimWorldScalingScheduleProps) {
-    this.startAt = schedule.startAt;
-    this.stopAt = schedule.stopAt;
+    this.start = schedule.start;
+    this.stop = schedule.stop;
   }
 
   private toCron(propertyName: string, maxRange: number, start?: string, stop?: string): string | undefined {
@@ -177,7 +177,7 @@ export class ValheimWorldScalingSchedule {
     }
 
     if (typeof start === 'undefined' || typeof stop === 'undefined') {
-      throw new Error(`The property "${propertyName}" must be set for both startAt and endAt.`);
+      throw new Error(`The property "${propertyName}" must be set for both start and stop.`);
     }
 
     const regex = new RegExp(/^$|[^\d\-,]+/);
@@ -190,7 +190,7 @@ export class ValheimWorldScalingSchedule {
     let to = ValheimWorldScalingSchedule.toIntArraySorted(stop, allowedRange);
 
     if (from.length != to.length) {
-      throw new Error('The lengths of both startAt and endAt properties must be exactly the same.');
+      throw new Error('The lengths of both start and stop properties must be exactly the same.');
     }
 
     if (from[0] > to[0]) {
@@ -210,15 +210,15 @@ export class ValheimWorldScalingSchedule {
   }
 
   private toCronHour(): string | undefined {
-    return this.toCron('hour', 23, this.startAt.hour, this.stopAt.hour);
+    return this.toCron('hour', 23, this.start.hour, this.stop.hour);
   }
 
   private toCronWeekDay(): string | undefined {
-    return this.toCron('weekDay', 6, this.startAt.weekDay, this.stopAt.weekDay);
+    return this.toCron('weekDay', 6, this.start.weekDay, this.stop.weekDay);
   }
 
   /**
-   * Returns the cron option merged both startAt and endAt.
+   * Returns the cron options merged properties for both start and stop.
    */
   public toCronOptions(): appscaling.CronOptions {
     return {
@@ -300,13 +300,13 @@ export class ValheimWorld extends cdk.Construct {
         maxCapacity: capacity,
       });
       props?.schedules.forEach((schedule, index) => {
-        taskCount.scaleOnSchedule(`ValheimWorldStartAt${index}`, {
-          schedule: appscaling.Schedule.cron(schedule.startAt),
+        taskCount.scaleOnSchedule(`ValheimWorldStartSchedule${index}`, {
+          schedule: appscaling.Schedule.cron(schedule.start),
           minCapacity: capacity,
           maxCapacity: capacity,
         });
-        taskCount.scaleOnSchedule(`ValheimWorldStopAt${index}`, {
-          schedule: appscaling.Schedule.cron(schedule.stopAt),
+        taskCount.scaleOnSchedule(`ValheimWorldStopSchedule${index}`, {
+          schedule: appscaling.Schedule.cron(schedule.stop),
           minCapacity: 0,
           maxCapacity: 0,
         });
