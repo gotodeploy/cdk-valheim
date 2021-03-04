@@ -3,7 +3,7 @@ const { AwsCdkConstructLibrary } = require('projen');
 const project = new AwsCdkConstructLibrary({
   author: 'gotodeploy',
   authorAddress: '1491134+gotodeploy@users.noreply.github.com',
-  cdkVersion: '1.90.1',
+  cdkVersion: '1.91.0',
   defaultReleaseBranch: 'main',
   jsiiFqn: 'projen.AwsCdkConstructLibrary',
   name: 'cdk-valheim',
