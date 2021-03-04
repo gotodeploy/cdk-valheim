@@ -1,12 +1,25 @@
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gotodeploy/cdk-valheim/Build) [![GitHub license](https://img.shields.io/github/license/gotodeploy/cdk-valheim)](https://github.com/gotodeploy/cdk-valheim/blob/main/LICENSE) ![npm](https://img.shields.io/npm/dw/cdk-valheim?label=npm) ![PyPI - Downloads](https://img.shields.io/pypi/dw/cdk-valheim?label=PyPI)
 # cdk-valheim
 
 A high level CDK construct of [Valheim](https://www.valheimgame.com/) dedicated server.
 
-## API
+## Features
+
+- Fargate cluster to run a Valheim server, with EFS for persistence (schedulable)
+- Hourly AWS Backup with 3 days retention (customizable)
+- [lloesche/valheim-server](https://github.com/lloesche/valheim-server-docker) as the default container image (replaceable)
+
+See [integration test](src/integ.valheim.ts) for an example.
+
+## API Doc
 
 See [API.md](API.md)
 
-## Example
+## Examples
+
+The construct is published to both npm and PyPI.
+
+- TypeScript
 
 ```ts
 new ValheimWorld(stack, 'ValheimWorld', {
@@ -21,30 +34,38 @@ new ValheimWorld(stack, 'ValheimWorld', {
     WORLD_NAME: 'Amazon',
     SERVER_PASS: 'fargate',
     BACKUPS: 'false',
-    // SERVER_PORT: '2456',
-    // SERVER_PUBLIC: 'true',
-    // UPDATE_CRON: '*/15 * * * *',
-    // RESTART_CRON: '0 5 * * *',
-    // TZ: 'Etc/UTC',
-    // BACKUPS_CRON: '0 * * * *',
-    // BACKUPS_DIRECTORY: '/config/backups',
-    // BACKUPS_MAX_AGE: '3',
-    // PERMISSIONS_UMASK: '022',
-    // STEAMCMD_ARGS: 'validate',
-    // VALHEIM_PLUS: 'false',
   },
 });
 ```
 
+- Python
+```python
+ValheimWorld(
+    self, 
+    'ValheimWorld',   
+    cpu=2048,
+    memory_limit_mib=4096,
+    schedules=[ValheimWorldScalingSchedule(
+        start=CronOptions(hour='12', week_day='1-5'),
+        stop=CronOptions(hour='1', week_day='1-5'),
+    )],
+    environment={
+        "SERVER_NAME": 'CDK Valheim',
+        "WORLD_NAME": 'Amazon',
+        "SERVER_PASS": 'fargate',
+        "BACKUPS": 'false',
+    })
+```
+
 ## Testing
 
-* Snapshot
+* Unit test and snapshot test
 
 ```sh
 npx projen test
 ```
 
-* Integration
+* Integration test
 
 ```sh
 npx cdk -a "npx ts-node src/integ.valheim.ts" diff
