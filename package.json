@@ -29,7 +29,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^1.91.0",
+    "@aws-cdk/assert": "^1.92.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^10.17.0",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
@@ -51,25 +51,25 @@
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
-    "@aws-cdk/aws-applicationautoscaling": "^1.91.0",
-    "@aws-cdk/aws-backup": "^1.91.0",
-    "@aws-cdk/aws-ec2": "^1.91.0",
-    "@aws-cdk/aws-ecs": "^1.91.0",
-    "@aws-cdk/aws-efs": "^1.91.0",
-    "@aws-cdk/aws-events": "^1.91.0",
-    "@aws-cdk/aws-logs": "^1.91.0",
-    "@aws-cdk/core": "^1.91.0",
+    "@aws-cdk/aws-applicationautoscaling": "^1.92.0",
+    "@aws-cdk/aws-backup": "^1.92.0",
+    "@aws-cdk/aws-ec2": "^1.92.0",
+    "@aws-cdk/aws-ecs": "^1.92.0",
+    "@aws-cdk/aws-efs": "^1.92.0",
+    "@aws-cdk/aws-events": "^1.92.0",
+    "@aws-cdk/aws-logs": "^1.92.0",
+    "@aws-cdk/core": "^1.92.0",
     "constructs": "^3.2.27"
   },
   "dependencies": {
-    "@aws-cdk/aws-applicationautoscaling": "^1.91.0",
-    "@aws-cdk/aws-backup": "^1.91.0",
-    "@aws-cdk/aws-ec2": "^1.91.0",
-    "@aws-cdk/aws-ecs": "^1.91.0",
-    "@aws-cdk/aws-efs": "^1.91.0",
-    "@aws-cdk/aws-events": "^1.91.0",
-    "@aws-cdk/aws-logs": "^1.91.0",
-    "@aws-cdk/core": "^1.91.0"
+    "@aws-cdk/aws-applicationautoscaling": "^1.92.0",
+    "@aws-cdk/aws-backup": "^1.92.0",
+    "@aws-cdk/aws-ec2": "^1.92.0",
+    "@aws-cdk/aws-ecs": "^1.92.0",
+    "@aws-cdk/aws-efs": "^1.92.0",
+    "@aws-cdk/aws-events": "^1.92.0",
+    "@aws-cdk/aws-logs": "^1.92.0",
+    "@aws-cdk/core": "^1.92.0"
   },
   "bundledDependencies": [],
   "keywords": [
