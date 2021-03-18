@@ -1,0 +1,4 @@
+flask
+awsgi
+boto3
+discord_interactions

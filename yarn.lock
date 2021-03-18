@@ -22,7 +22,7 @@
     "@aws-cdk/cx-api" "1.94.1"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-apigateway@1.94.1":
+"@aws-cdk/aws-apigateway@1.94.1", "@aws-cdk/aws-apigateway@^1.94.1":
   version "1.94.1"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-apigateway/-/aws-apigateway-1.94.1.tgz#555a96d5bc36d526bc7ea520c87082702f78fa2d"
   integrity sha512-b9SW6mlVaUl3E28hCYkgWn+PAmZ83Rq8z/S2pT/HMmRQ5sC8NYQUSTkO4ArExKhnfLG72QbRKmqgtjsqGhsnVg==
@@ -335,7 +335,7 @@
     "@aws-cdk/custom-resources" "1.94.1"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-iam@1.94.1":
+"@aws-cdk/aws-iam@1.94.1", "@aws-cdk/aws-iam@^1.94.1":
   version "1.94.1"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-iam/-/aws-iam-1.94.1.tgz#c3e2fc3d3e61b0630627e5dee97393f9036d26db"
   integrity sha512-LzdIZzRntlbidGjTG4FXENoMw2QYJQNU6gC9vERHV59NQceOIzzOPlhu+JtbjHpJaY1JN81yQQ01/q317zsIBQ==
@@ -354,7 +354,17 @@
     "@aws-cdk/cx-api" "1.94.1"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-lambda@1.94.1":
+"@aws-cdk/aws-lambda-python@^1.94.1":
+  version "1.94.1"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-lambda-python/-/aws-lambda-python-1.94.1.tgz#40f7ac3bc89780dda4b3687090279ecfe709e030"
+  integrity sha512-J5OupwW0mIxk3m4iM39xvFfWWAFwfJVJBEZZzy6LI2OojKhXL/6f9kvreXdjnQROZE0dq0A/0Ph3258gktWp3Q==
+  dependencies:
+    "@aws-cdk/aws-ec2" "1.94.1"
+    "@aws-cdk/aws-lambda" "1.94.1"
+    "@aws-cdk/core" "1.94.1"
+    constructs "^3.2.0"
+
+"@aws-cdk/aws-lambda@1.94.1", "@aws-cdk/aws-lambda@^1.94.1":
   version "1.94.1"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-lambda/-/aws-lambda-1.94.1.tgz#825c6151a2949c2727c9312d8d22408ca64ad31c"
   integrity sha512-hRnjWqVJb4OJfX+OL8elpJjuouB/3ryaXFK+b/UJZzT5P+0aY7g6aDC426NsfZpy8JRz5Xcclh4c8nvkIL43EQ==
