@@ -15,6 +15,8 @@ client = boto3.client('ecs')
 
 # Your public key can be found on your application in the Developer Portal
 PUBLIC_KEY = os.environ.get('APPLICATION_PUBLIC_KEY')
+ECS_CLUSTER_ARN = os.environ.get("ECS_CLUSTER_ARN")
+ECS_SERVICE_NAME = os.environ.get("ECS_SERVICE_NAME")
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -46,10 +48,8 @@ def index():
         if interaction_option == "status":
             try:
                 resp = client.describe_services(
-                    cluster=os.environ.get("ECS_CLUSTER_ARN", ""),
-                    services=[
-                        os.environ.get("ECS_SERVICE_NAME", ""),
-                    ]
+                    cluster=ECS_CLUSTER_ARN,
+                    services=[ECS_SERVICE_NAME]
                 )
                 desired_count = resp["services"][0]["desiredCount"]
                 running_count = resp["services"][0]["runningCount"]
@@ -66,8 +66,8 @@ def index():
             content = "Starting the server"
 
             resp = client.update_service(
-                cluster=os.environ.get("ECS_CLUSTER_ARN", ""),
-                service=os.environ.get("ECS_SERVICE_NAME", ""),
+                cluster=ECS_CLUSTER_ARN,
+                service=ECS_SERVICE_NAME,
                 desiredCount=1
             )
 
@@ -75,8 +75,8 @@ def index():
             content = "Stopping the server"
 
             resp = client.update_service(
-                cluster=os.environ.get("ECS_CLUSTER_ARN", ""),
-                service=os.environ.get("ECS_SERVICE_NAME", ""),
+                cluster=ECS_CLUSTER_ARN,
+                service=ECS_SERVICE_NAME,
                 desiredCount=0
             )
 

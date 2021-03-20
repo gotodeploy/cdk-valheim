@@ -86,6 +86,14 @@
       "type": "build"
     },
     {
+      "name": "@types/node-fetch",
+      "type": "bundled"
+    },
+    {
+      "name": "node-fetch",
+      "type": "bundled"
+    },
+    {
       "name": "@aws-cdk/aws-apigateway",
       "version": "^1.94.1",
       "type": "peer"

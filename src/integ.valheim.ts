@@ -39,8 +39,10 @@ const world = new ValheimWorld(stack, 'ValheimWorld', {
 // e.g. npx cdk -a "npx ts-node src/integ.valheim.ts" -c APPLICATION_PUBLIC_KEY=foo diff
 const applicationPublicKey = stack.node.tryGetContext('APPLICATION_PUBLIC_KEY');
 
-new Hammer(stack, 'Hammer', {
-  applicationPublicKey,
-  ecsClusterArn: world.service.cluster.clusterArn,
-  ecsServiceName: world.service.serviceName,
-});
+if (applicationPublicKey != null) {
+  new Hammer(stack, 'Hammer', {
+    applicationPublicKey,
+    ecsClusterArn: world.service.cluster.clusterArn,
+    ecsServiceName: world.service.serviceName,
+  });
+}

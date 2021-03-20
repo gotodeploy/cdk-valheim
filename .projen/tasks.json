@@ -33,6 +33,14 @@
       ],
       "condition": "git diff --exit-code > /dev/null"
     },
+    "register:discord": {
+      "name": "register:discord",
+      "steps": [
+        {
+          "exec": "npx ts-node ./src/utils/register_discord.ts"
+        }
+      ]
+    },
     "compile": {
       "name": "compile",
       "category": "00.build",

@@ -26,11 +26,28 @@ const project = new AwsCdkConstructLibrary({
   gitignore: [
     'cdk.context.json',
     'cdk.out/',
+    '.env',
   ],
   python: {
     distName: 'cdk-valheim',
     module: 'cdk_valheim',
   },
+  bundledDeps: [
+    'node-fetch',
+    '@types/node-fetch',
+  ],
+  scripts: {
+    'discord:register': 'npx ts-node ./src/utils/register_discord.ts',
+  },
+  keywords: [
+    'aws',
+    'cdk',
+    'constructs',
+    'ecs',
+    'efs',
+    'aws-backup',
+    'valheim',
+  ],
 
   /* AwsCdkConstructLibraryOptions */
   // cdkAssert: true,                                                          /* Install the @aws-cdk/assert library? */
@@ -60,13 +77,11 @@ const project = new AwsCdkConstructLibrary({
   // authorUrl: undefined,                                                     /* Author's URL / Website. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (`main` in `package.json`). */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in `package.json`. */
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via `engines` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json `engines` (inclusive). */
@@ -81,7 +96,6 @@ const project = new AwsCdkConstructLibrary({
   // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* NodeProjectOptions */

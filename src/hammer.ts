@@ -15,9 +15,9 @@ export class Hammer extends cdk.Construct {
     super(scope, id);
     const commandHandler = new lambdaPython.PythonFunction(
       this,
-      'FlaskAppLambda',
+      'DiscordApiLambda',
       {
-        entry: './assets/functions/discord/',
+        entry: './assets/discord/function/',
         runtime: lambda.Runtime.PYTHON_3_8,
         environment: {
           APPLICATION_PUBLIC_KEY: props.applicationPublicKey,
@@ -28,11 +28,7 @@ export class Hammer extends cdk.Construct {
     );
 
     commandHandler.role?.addManagedPolicy(
-      iam.ManagedPolicy.fromManagedPolicyArn(
-        this,
-        'ECS_FullAccessPolicy',
-        'arn:aws:iam::aws:policy/AmazonECS_FullAccess',
-      ),
+      iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonECS_FullAccess'),
     );
 
     // https://slmkitani.medium.com/passing-custom-headers-through-amazon-api-gateway-to-an-aws-lambda-function-f3a1cfdc0e29
@@ -50,9 +46,8 @@ export class Hammer extends cdk.Construct {
       `,
     };
 
-    const apiEndpoint = new apigw.RestApi(this, 'FlaskAppEndpoint');
-    apiEndpoint.root.addMethod('ANY');
-    const webhook = apiEndpoint.root.addResource('discord');
+    const restApi = new apigw.RestApi(this, 'DiscordApiEndpoint');
+    const webhook = restApi.root.addResource('discord');
     const webhookIntegration = new apigw.LambdaIntegration(commandHandler, { requestTemplates });
     webhook.addMethod('POST', webhookIntegration);
   }
