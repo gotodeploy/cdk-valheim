@@ -8,7 +8,7 @@
     "projen": "npx projen",
     "start": "npx projen start",
     "clobber": "npx projen clobber",
-    "register:discord": "npx projen register:discord",
+    "discord:register": "npx projen discord:register",
     "compile": "npx projen compile",
     "test:compile": "npx projen test:compile",
     "test": "npx projen test",
