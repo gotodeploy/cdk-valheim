@@ -31,6 +31,6 @@ async function main(jsonBodyPath: string) {
   console.log(await response.text());
 }
 
-const jsonBodyPath = process.argv[2] ?? './assets/discord/commands.json';
+const jsonBodyPath = process.argv[2] ?? './assets/commands.json';
 
 main(jsonBodyPath).catch(e => console.error(e));

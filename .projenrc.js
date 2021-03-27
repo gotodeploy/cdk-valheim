@@ -1,4 +1,5 @@
 const { AwsCdkConstructLibrary } = require('projen');
+const { PythonProject } = require('projen/lib/python');
 
 const project = new AwsCdkConstructLibrary({
   author: 'gotodeploy',
@@ -146,3 +147,53 @@ const project = new AwsCdkConstructLibrary({
 });
 
 project.synth();
+
+const valheimCommands = new PythonProject({
+  authorEmail: project.authorEmail,
+  authorName: project.authorName,
+  jsiiFqn: 'projen.python.PythonProject',
+  moduleName: 'vh',
+  name: 'valheim_commands',
+  version: '0.1.0',
+  outdir: './functions/commands',
+  parent: project,
+  setuptools: true,
+  deps: [
+    'boto3',
+  ],
+  devDeps: [
+    'pytest-mock',
+    'mypy',
+    'flake8',
+    'black',
+  ],
+});
+
+valheimCommands.synth();
+
+const discordHandler = new PythonProject({
+  authorEmail: project.authorEmail,
+  authorName: project.authorName,
+  jsiiFqn: 'projen.python.PythonProject',
+  moduleName: 'handler',
+  name: 'slash_command_discord',
+  version: '0.1.0',
+  outdir: './functions/discord',
+  parent: project,
+  deps: [
+    'aws-wsgi',
+    'discord-interactions',
+    'Flask',
+    'PyNaCl',
+    'requests',
+    '-e ../commands',
+  ],
+  devDeps: [
+    'pytest-mock',
+    'mypy',
+    'flake8',
+    'black',
+  ],
+});
+
+discordHandler.synth();

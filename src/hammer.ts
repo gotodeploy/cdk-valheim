@@ -13,17 +13,25 @@ export interface HammerProps {
 export class Hammer extends cdk.Construct {
   constructor(scope: cdk.Construct, id: string, props: HammerProps) {
     super(scope, id);
+
+    // FIXME: This doesn't work at the time
+    const valheimCommandLayer = new lambdaPython.PythonLayerVersion(this, 'ValheimCommandLibrary', {
+      entry: './functions/commands/vh',
+      compatibleRuntimes: [lambda.Runtime.PYTHON_3_8],
+    });
+
     const commandHandler = new lambdaPython.PythonFunction(
       this,
       'DiscordApiLambda',
       {
-        entry: './assets/discord/function/',
+        entry: './functions/discord/handler',
         runtime: lambda.Runtime.PYTHON_3_8,
         environment: {
           APPLICATION_PUBLIC_KEY: props.applicationPublicKey,
           ECS_SERVICE_NAME: props.ecsServiceName,
           ECS_CLUSTER_ARN: props.ecsClusterArn,
         },
+        layers: [valheimCommandLayer],
       },
     );
 
