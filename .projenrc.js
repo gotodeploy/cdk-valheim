@@ -1,4 +1,5 @@
 const { AwsCdkConstructLibrary } = require('projen');
+const { PythonProject } = require('projen/lib/python');
 
 const project = new AwsCdkConstructLibrary({
   author: 'gotodeploy',
@@ -10,23 +11,44 @@ const project = new AwsCdkConstructLibrary({
   repositoryUrl: 'https://github.com/gotodeploy/cdk-valheim.git',
   cdkDependencies: [
     '@aws-cdk/aws-applicationautoscaling',
+    '@aws-cdk/aws-apigateway',
     '@aws-cdk/aws-backup',
     '@aws-cdk/aws-ec2',
     '@aws-cdk/aws-ecs',
     '@aws-cdk/aws-efs',
     '@aws-cdk/aws-events',
+    '@aws-cdk/aws-lambda',
+    '@aws-cdk/aws-lambda-python',
     '@aws-cdk/aws-logs',
+    '@aws-cdk/aws-iam',
     '@aws-cdk/core',
   ],
   license: 'Apache-2.0',
   gitignore: [
     'cdk.context.json',
     'cdk.out/',
+    '.env',
   ],
   python: {
     distName: 'cdk-valheim',
     module: 'cdk_valheim',
   },
+  bundledDeps: [
+    'node-fetch',
+    '@types/node-fetch',
+  ],
+  scripts: {
+    'discord:register': 'npx ts-node ./src/utils/register_discord.ts',
+  },
+  keywords: [
+    'aws',
+    'cdk',
+    'constructs',
+    'ecs',
+    'efs',
+    'aws-backup',
+    'valheim',
+  ],
 
   /* AwsCdkConstructLibraryOptions */
   // cdkAssert: true,                                                          /* Install the @aws-cdk/assert library? */
@@ -56,13 +78,11 @@ const project = new AwsCdkConstructLibrary({
   // authorUrl: undefined,                                                     /* Author's URL / Website. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (`main` in `package.json`). */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in `package.json`. */
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via `engines` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json `engines` (inclusive). */
@@ -77,7 +97,6 @@ const project = new AwsCdkConstructLibrary({
   // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* NodeProjectOptions */
@@ -128,3 +147,53 @@ const project = new AwsCdkConstructLibrary({
 });
 
 project.synth();
+
+const valheimCommands = new PythonProject({
+  authorEmail: project.authorEmail,
+  authorName: project.authorName,
+  jsiiFqn: 'projen.python.PythonProject',
+  moduleName: 'vh',
+  name: 'valheim_commands',
+  version: '0.1.0',
+  outdir: './functions/commands',
+  parent: project,
+  setuptools: true,
+  deps: [
+    'boto3',
+  ],
+  devDeps: [
+    'pytest-mock',
+    'mypy',
+    'flake8',
+    'black',
+  ],
+});
+
+valheimCommands.synth();
+
+const discordHandler = new PythonProject({
+  authorEmail: project.authorEmail,
+  authorName: project.authorName,
+  jsiiFqn: 'projen.python.PythonProject',
+  moduleName: 'handler',
+  name: 'slash_command_discord',
+  version: '0.1.0',
+  outdir: './functions/discord',
+  parent: project,
+  deps: [
+    'aws-wsgi',
+    'discord-interactions',
+    'Flask',
+    'PyNaCl',
+    'requests',
+    '-e ../commands',
+  ],
+  devDeps: [
+    'pytest-mock',
+    'mypy',
+    'flake8',
+    'black',
+  ],
+});
+
+discordHandler.synth();

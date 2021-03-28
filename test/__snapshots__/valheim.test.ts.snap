@@ -3,9 +3,30 @@
 exports[`ValheimWorldSnapshot 1`] = `
 Object {
   "Outputs": Object {
+    "ValheimWorldValheimCluterArn4C94962F": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "ValheimWorldValheimClusterE58CB7BF",
+          "Arn",
+        ],
+      },
+    },
+    "ValheimWorldValheimCluterName7269C14D": Object {
+      "Value": Object {
+        "Ref": "ValheimWorldValheimClusterE58CB7BF",
+      },
+    },
     "ValheimWorldValheimServiceArnEB328879": Object {
       "Value": Object {
         "Ref": "ValheimWorldValheimServiceCC61ABC6",
+      },
+    },
+    "ValheimWorldValheimServiceNameD09AA4AD": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "ValheimWorldValheimServiceCC61ABC6",
+          "Name",
+        ],
       },
     },
   },

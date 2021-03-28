@@ -339,6 +339,18 @@ export class ValheimWorld extends cdk.Construct {
     new cdk.CfnOutput(this, 'ValheimServiceArn', {
       value: this.service.serviceArn,
     });
+
+    new cdk.CfnOutput(this, 'ValheimServiceName', {
+      value: this.service.serviceName,
+    });
+
+    new cdk.CfnOutput(this, 'ValheimCluterArn', {
+      value: this.service.cluster.clusterArn,
+    });
+
+    new cdk.CfnOutput(this, 'ValheimCluterName', {
+      value: this.service.cluster.clusterName,
+    });
   }
 
   // Default backup plan runs every hour

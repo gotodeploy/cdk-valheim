@@ -4,6 +4,7 @@
 
 Name|Description
 ----|-----------
+[Hammer](#cdk-valheim-hammer)|*No description*
 [ValheimWorld](#cdk-valheim-valheimworld)|*No description*
 [ValheimWorldScalingSchedule](#cdk-valheim-valheimworldscalingschedule)|Represents the schedule to determine when the server starts or terminates.
 
@@ -12,8 +13,35 @@ Name|Description
 
 Name|Description
 ----|-----------
+[HammerProps](#cdk-valheim-hammerprops)|*No description*
 [ValheimWorldProps](#cdk-valheim-valheimworldprops)|*No description*
 [ValheimWorldScalingScheduleProps](#cdk-valheim-valheimworldscalingscheduleprops)|Options for ValheimWorldScalingSchedule.
+
+
+
+## class Hammer  <a id="cdk-valheim-hammer"></a>
+
+
+
+__Implements__: [IConstruct](#constructs-iconstruct), [IConstruct](#aws-cdk-core-iconstruct), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable)
+__Extends__: [Construct](#aws-cdk-core-construct)
+
+### Initializer
+
+
+
+
+```ts
+new Hammer(scope: Construct, id: string, props: HammerProps)
+```
+
+* **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
+* **id** (<code>string</code>)  *No description*
+* **props** (<code>[HammerProps](#cdk-valheim-hammerprops)</code>)  *No description*
+  * **applicationPublicKey** (<code>string</code>)  *No description* 
+  * **ecsClusterArn** (<code>string</code>)  *No description* 
+  * **ecsServiceName** (<code>string</code>)  *No description* 
+
 
 
 
@@ -104,6 +132,21 @@ toCronOptions(): CronOptions
 
 __Returns__:
 * <code>[CronOptions](#aws-cdk-aws-applicationautoscaling-cronoptions)</code>
+
+
+
+## struct HammerProps  <a id="cdk-valheim-hammerprops"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**applicationPublicKey** | <code>string</code> | <span></span>
+**ecsClusterArn** | <code>string</code> | <span></span>
+**ecsServiceName** | <code>string</code> | <span></span>
 
 
 

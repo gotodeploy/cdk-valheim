@@ -1,0 +1,26 @@
+{
+    "name": "vh",
+    "description": "Start, stop or get the status of the Valheim server",
+    "options": [
+        {
+            "name": "valheim_server_controls",
+            "description": "What do you want to do?",
+            "type": 3,
+            "required": true,
+            "choices": [
+                {
+                    "name": "status",
+                    "value": "status"
+                },
+                {
+                    "name": "start",
+                    "value": "start"
+                },
+                {
+                    "name": "stop",
+                    "value": "stop"
+                }
+            ]
+        }
+    ]
+}
