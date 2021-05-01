@@ -251,7 +251,6 @@ Object {
             ],
           },
         },
-        "PlatformVersion": "1.4.0",
         "TaskDefinition": Object {
           "Ref": "ValheimWorldValheimTaskDefinition40062B44",
         },
