@@ -299,7 +299,6 @@ export class ValheimWorld extends cdk.Construct {
 
     this.service = new ecs.FargateService(this, 'ValheimService', {
       cluster,
-      platformVersion: ecs.FargatePlatformVersion.VERSION1_4,
       assignPublicIp: true,
       taskDefinition,
       desiredCount: props?.desiredCount,
