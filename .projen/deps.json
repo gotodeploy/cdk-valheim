@@ -2,7 +2,7 @@
   "dependencies": [
     {
       "name": "@aws-cdk/assert",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "build"
     },
     {
@@ -69,7 +69,7 @@
     },
     {
       "name": "projen",
-      "version": "^0.16.36",
+      "version": "^0.17.73",
       "type": "build"
     },
     {
@@ -87,42 +87,42 @@
     },
     {
       "name": "@aws-cdk/aws-applicationautoscaling",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-backup",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-ec2",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-ecs",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-efs",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-events",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-logs",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "peer"
     },
     {
@@ -132,42 +132,42 @@
     },
     {
       "name": "@aws-cdk/aws-applicationautoscaling",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-backup",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-ec2",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-ecs",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-efs",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-events",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-logs",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.94.1",
+      "version": "^1.101.0",
       "type": "runtime"
     }
   ],
