@@ -3,6 +3,8 @@
 
 A high level CDK construct of [Valheim](https://www.valheimgame.com/) dedicated server.
 
+![](assets/images/diagram.png)
+
 ## Features
 
 - Fargate cluster to run a Valheim server, with EFS for persistence (schedulable)
@@ -15,11 +17,16 @@ See [integration test](src/integ.valheim.ts) for an example.
 
 See [API.md](API.md)
 
+## References
+
+- [On-demand, serverless Valheim server setup with AWS CDK, Discord Interactions and GitLab CI](https://briancaffey.github.io/2021/03/18/on-demand-dedicated-serverless-valheim-server-with-cdk-discrod-interactions/)
+- [Grantapher/discord-cdk-valheim](https://github.com/Grantapher/discord-cdk-valheim)
+
 ## Examples
 
 The construct is published to both npm and PyPI.
 
-- TypeScript
+### TypeScript
 
 ```ts
 new ValheimWorld(stack, 'ValheimWorld', {
@@ -38,7 +45,8 @@ new ValheimWorld(stack, 'ValheimWorld', {
 });
 ```
 
-- Python
+### Python
+
 ```python
 ValheimWorld(
     self, 
@@ -50,10 +58,10 @@ ValheimWorld(
         stop=CronOptions(hour='1', week_day='1-5'),
     )],
     environment={
-        "SERVER_NAME": 'CDK Valheim',
-        "WORLD_NAME": 'Amazon',
-        "SERVER_PASS": 'fargate',
-        "BACKUPS": 'false',
+        'SERVER_NAME': 'CDK Valheim',
+        'WORLD_NAME': 'Amazon',
+        'SERVER_PASS': 'fargate',
+        'BACKUPS': 'false',
     })
 ```
 

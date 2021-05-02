@@ -33,6 +33,14 @@
       ],
       "condition": "git diff --exit-code > /dev/null"
     },
+    "dia": {
+      "name": "dia",
+      "steps": [
+        {
+          "exec": "npx cdk-dia --target-path assets/images/diagram.png"
+        }
+      ]
+    },
     "bump": {
       "name": "bump",
       "category": "20.release",

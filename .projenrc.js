@@ -22,10 +22,14 @@ const project = new AwsCdkConstructLibrary({
   gitignore: [
     'cdk.context.json',
     'cdk.out/',
+    '*.dot',
   ],
   python: {
     distName: 'cdk-valheim',
     module: 'cdk_valheim',
+  },
+  scripts: {
+    dia: 'npx cdk-dia --target-path assets/images/diagram.png',
   },
 
   /* AwsCdkConstructLibraryOptions */

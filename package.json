@@ -6,6 +6,7 @@
   },
   "scripts": {
     "clobber": "npx projen clobber",
+    "dia": "npx projen dia",
     "bump": "npx projen bump",
     "unbump": "npx projen unbump",
     "compile": "npx projen compile",
