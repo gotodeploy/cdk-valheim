@@ -29,7 +29,7 @@ const project = new AwsCdkConstructLibrary({
     module: 'cdk_valheim',
   },
   scripts: {
-    "dia": "npx cdk-dia --target-path assets/images/diagram.png",
+    dia: 'npx cdk-dia --target-path assets/images/diagram.png',
   },
 
   /* AwsCdkConstructLibraryOptions */
