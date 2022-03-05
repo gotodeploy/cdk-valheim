@@ -1,5 +1,8 @@
-import * as ecs from '@aws-cdk/aws-ecs';
-import { App, Stack } from '@aws-cdk/core';
+import {
+  App,
+  Stack,
+  aws_ecs as ecs,
+} from 'aws-cdk-lib';
 import { ValheimWorld } from './index';
 
 const env = {

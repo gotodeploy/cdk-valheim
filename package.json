@@ -5,25 +5,32 @@
     "url": "https://github.com/gotodeploy/cdk-valheim.git"
   },
   "scripts": {
-    "clobber": "npx projen clobber",
-    "dia": "npx projen dia",
-    "bump": "npx projen bump",
-    "unbump": "npx projen unbump",
-    "compile": "npx projen compile",
-    "test:compile": "npx projen test:compile",
-    "test": "npx projen test",
     "build": "npx projen build",
-    "test:watch": "npx projen test:watch",
-    "test:update": "npx projen test:update",
-    "projen:upgrade": "npx projen projen:upgrade",
-    "default": "npx projen default",
-    "watch": "npx projen watch",
-    "package": "npx projen package",
-    "eslint": "npx projen eslint",
+    "bump": "npx projen bump",
+    "clobber": "npx projen clobber",
     "compat": "npx projen compat",
+    "compile": "npx projen compile",
+    "default": "npx projen default",
+    "dia": "npx projen dia",
     "docgen": "npx projen docgen",
-    "projen": "npx projen",
-    "start": "npx projen start"
+    "eject": "npx projen eject",
+    "eslint": "npx projen eslint",
+    "package": "npx projen package",
+    "package-all": "npx projen package-all",
+    "package:js": "npx projen package:js",
+    "package:python": "npx projen package:python",
+    "post-compile": "npx projen post-compile",
+    "post-upgrade": "npx projen post-upgrade",
+    "pre-compile": "npx projen pre-compile",
+    "release": "npx projen release",
+    "test": "npx projen test",
+    "test:update": "npx projen test:update",
+    "test:watch": "npx projen test:watch",
+    "unbump": "npx projen unbump",
+    "upgrade": "npx projen upgrade",
+    "upgrade-projen": "npx projen upgrade-projen",
+    "watch": "npx projen watch",
+    "projen": "npx projen"
   },
   "author": {
     "name": "gotodeploy",
@@ -31,49 +38,33 @@
     "organization": false
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^1.101.0",
-    "@types/jest": "^26.0.20",
-    "@types/node": "^10.17.0",
-    "@typescript-eslint/eslint-plugin": "^4.3.0",
-    "@typescript-eslint/parser": "^4.3.0",
-    "eslint": "^7.19.0",
-    "eslint-import-resolver-node": "^0.3.4",
-    "eslint-import-resolver-typescript": "^2.3.0",
-    "eslint-plugin-import": "^2.22.1",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^12",
+    "@typescript-eslint/eslint-plugin": "^5",
+    "@typescript-eslint/parser": "^5",
+    "aws-cdk-lib": "2.15.0",
+    "cdk-dia": "^0.6.1",
+    "constructs": "10.0.5",
+    "eslint": "^8",
+    "eslint-import-resolver-node": "^0.3.6",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.4",
     "jest": "^26.6.3",
-    "jest-junit": "^12",
-    "jsii": "^1.20.1",
-    "jsii-diff": "^1.20.1",
-    "jsii-docgen": "^1.8.40",
-    "jsii-pacmak": "^1.20.1",
-    "json-schema": "^0.3.0",
-    "projen": "^0.17.73",
+    "jest-junit": "^13",
+    "jsii": "^1.54.0",
+    "jsii-diff": "^1.54.0",
+    "jsii-docgen": "^6.1.22",
+    "json-schema": "^0.4.0",
+    "npm-check-updates": "^12",
+    "projen": "0.52.56",
     "standard-version": "^9",
-    "ts-jest": "^26.5.1",
-    "typescript": "^3.9.5"
+    "ts-jest": "^26.5.6",
+    "typescript": "^3.9.10"
   },
   "peerDependencies": {
-    "@aws-cdk/aws-applicationautoscaling": "^1.101.0",
-    "@aws-cdk/aws-backup": "^1.101.0",
-    "@aws-cdk/aws-ec2": "^1.101.0",
-    "@aws-cdk/aws-ecs": "^1.101.0",
-    "@aws-cdk/aws-efs": "^1.101.0",
-    "@aws-cdk/aws-events": "^1.101.0",
-    "@aws-cdk/aws-logs": "^1.101.0",
-    "@aws-cdk/core": "^1.101.0",
-    "constructs": "^3.2.27"
+    "aws-cdk-lib": "^2.15.0",
+    "constructs": "^10.0.5"
   },
-  "dependencies": {
-    "@aws-cdk/aws-applicationautoscaling": "^1.101.0",
-    "@aws-cdk/aws-backup": "^1.101.0",
-    "@aws-cdk/aws-ec2": "^1.101.0",
-    "@aws-cdk/aws-ecs": "^1.101.0",
-    "@aws-cdk/aws-efs": "^1.101.0",
-    "@aws-cdk/aws-events": "^1.101.0",
-    "@aws-cdk/aws-logs": "^1.101.0",
-    "@aws-cdk/core": "^1.101.0"
-  },
-  "bundledDependencies": [],
   "keywords": [
     "cdk"
   ],
@@ -82,8 +73,8 @@
   "version": "0.0.0",
   "jest": {
     "testMatch": [
-      "**/__tests__/**/*.ts?(x)",
-      "**/?(*.)+(spec|test).ts?(x)"
+      "<rootDir>/src/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)"
     ],
     "clearMocks": true,
     "collectCoverage": true,
@@ -91,6 +82,7 @@
       "json",
       "lcov",
       "clover",
+      "cobertura",
       "text"
     ],
     "coverageDirectory": "coverage",
@@ -115,7 +107,7 @@
     "preset": "ts-jest",
     "globals": {
       "ts-jest": {
-        "tsconfig": "tsconfig.jest.json"
+        "tsconfig": "tsconfig.dev.json"
       }
     }
   },
