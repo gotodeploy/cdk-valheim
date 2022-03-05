@@ -1,15 +1,18 @@
-import { SynthUtils } from '@aws-cdk/assert';
-import { Vpc } from '@aws-cdk/aws-ec2';
-import { Stack } from '@aws-cdk/core';
+import {
+  Stack,
+  aws_ec2 as ec2,
+} from 'aws-cdk-lib';
+import { Template } from 'aws-cdk-lib/assertions';
 
 import { ValheimWorld, ValheimWorldScalingSchedule } from '../src';
 
 test('ValheimWorldSnapshot', () => {
   const stack = new Stack();
-  const vpc = new Vpc(stack, 'vpc');
+  const vpc = new ec2.Vpc(stack, 'vpc');
   new ValheimWorld(stack, 'ValheimWorld', { vpc });
 
-  expect(SynthUtils.toCloudFormation(stack)).toMatchSnapshot();
+  const template = Template.fromStack(stack);
+  expect(template.toJSON()).toMatchSnapshot();
 });
 
 test.each`

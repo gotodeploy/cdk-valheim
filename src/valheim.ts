@@ -1,11 +1,15 @@
-import * as appscaling from '@aws-cdk/aws-applicationautoscaling';
-import * as backup from '@aws-cdk/aws-backup';
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as ecs from '@aws-cdk/aws-ecs';
-import * as efs from '@aws-cdk/aws-efs';
-import * as events from '@aws-cdk/aws-events';
-import * as logs from '@aws-cdk/aws-logs';
-import * as cdk from '@aws-cdk/core';
+import {
+  CfnOutput,
+  Duration,
+  aws_applicationautoscaling as appscaling,
+  aws_backup as backup,
+  aws_ec2 as ec2,
+  aws_ecs as ecs,
+  aws_efs as efs,
+  aws_events as events,
+  aws_logs as logs,
+} from 'aws-cdk-lib';
+import { Construct } from 'constructs';
 
 /**
  * Options for ValheimWorldScalingSchedule.
@@ -247,13 +251,13 @@ export class ValheimWorldScalingSchedule {
   }
 }
 
-export class ValheimWorld extends cdk.Construct {
+export class ValheimWorld extends Construct {
   public backupPlan: backup.BackupPlan;
   public fileSystem: efs.FileSystem;
   public schedules?: ValheimWorldScalingSchedule[];
   public service: ecs.FargateService;
 
-  constructor(scope: cdk.Construct, id: string, props?: ValheimWorldProps) {
+  constructor(scope: Construct, id: string, props?: ValheimWorldProps) {
     super(scope, id);
 
     const vpc = props?.vpc ?? ec2.Vpc.fromLookup(this, 'DefaultVpc', {
@@ -335,7 +339,7 @@ export class ValheimWorld extends cdk.Construct {
 
     this.backupPlan = props?.backupPlan ?? this.defaultBackupPlan();
 
-    new cdk.CfnOutput(this, 'ValheimServiceArn', {
+    new CfnOutput(this, 'ValheimServiceArn', {
       value: this.service.serviceArn,
     });
   }
@@ -349,7 +353,7 @@ export class ValheimWorld extends cdk.Construct {
     const defaultSchedule = { toCronOptions: () => { return { minute: '0' }; } };
     for (const schedule of this.schedules ?? [defaultSchedule]) {
       backupPlan.addRule(new backup.BackupPlanRule({
-        deleteAfter: cdk.Duration.days(3),
+        deleteAfter: Duration.days(3),
         scheduleExpression: events.Schedule.cron(schedule.toCronOptions()),
       }));
     }
