@@ -4,6 +4,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorName: 'gotodeploy',
   authorAddress: '1491134+gotodeploy@users.noreply.github.com',
   cdkVersion: '2.15.0',
+  // projenVersion: '0.52.57',
   defaultReleaseBranch: 'main',
   name: 'cdk-valheim',
   repositoryUrl: 'https://github.com/gotodeploy/cdk-valheim.git',
