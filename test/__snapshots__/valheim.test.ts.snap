@@ -130,7 +130,7 @@ Object {
     "ValheimWorldValheimSaveDataEFSEF58E82E": Object {
       "DeletionPolicy": "Retain",
       "Properties": Object {
-        "Encrypted": true,
+        "Encrypted": false,
         "FileSystemTags": Array [
           Object {
             "Key": "Name",
