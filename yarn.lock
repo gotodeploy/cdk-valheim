@@ -1735,9 +1735,9 @@ constructs@10.0.5:
   integrity sha512-IwOwekzrASFC3qt4ozCtV09rteAIAesuCGsW0p+uBfqHd2XcvA5CXqJjgf4eUqm6g8e/noXlVCMDWwC8GaLtrg==
 
 constructs@^3.3.69:
-  version "3.3.234"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.234.tgz#21fc96bdf6a06d52620c2dfff90f56a3783952a4"
-  integrity sha512-u6SX0mT98lVZoFuHX3H2xsJPt8gEGRg1E5vvr3I8RFR6VMKShDZw25AhpxokghVaCeIVFzqNV/8Ao9WcpX9HRA==
+  version "3.3.235"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.235.tgz#cf347a911618c6d4cd7f547c1e5653fd7fe9da55"
+  integrity sha512-dE8DfZ+81XE1njyvZeuTdsCXY52K6+0keIEr/H/j77snJn3TiReuhaaJK3ls6QS3BwC7Xn0QWQRff6WxBUfRYg==
 
 conventional-changelog-angular@^5.0.12:
   version "5.0.13"
@@ -4156,9 +4156,9 @@ jsii-diff@^1.54.0:
     yargs "^16.2.0"
 
 jsii-docgen@^6.1.22:
-  version "6.1.22"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-6.1.22.tgz#cd2c05c082aebd365f4f435733fad4cf40fad0dd"
-  integrity sha512-NFCren8u+c4QjMSma1yPn+z3eFNAiWJ6/qXNeY7N9oi5e827toLLdV9kKVroI+tb1VlUD1i1Cd5LOW3GwLQDyA==
+  version "6.1.23"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-6.1.23.tgz#6b273942202dccbcbd9c8365adec00e8c0aefbcb"
+  integrity sha512-LHewRf1t2W2FmeuCU3U+TJSsfP0hotIHw+Ui6ot7i8Rmr2ju9jrowTOa3lpgb1Aky6lQpVDuOym6SMx3+vqVVg==
   dependencies:
     "@jsii/spec" "^1.54.0"
     case "^1.6.3"
@@ -5388,10 +5388,10 @@ progress@^2.0.3:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-projen@0.52.56:
-  version "0.52.56"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.52.56.tgz#e24a966ba63fe32e85ab9169af7205dbeab055b5"
-  integrity sha512-8My7YSUMyona+2iO5QaKXBjYM9JomQB+OV00zlE0CuLDwQE5fuigkNJ3TE15prhVriv4jlNRl5V0tL1a2l3eVw==
+projen@0.52.57:
+  version "0.52.57"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.52.57.tgz#e200d13502da4211f226cf99f90f71c8cfe2577e"
+  integrity sha512-5KIaaZv92xkAsCHdGQYZdCsJ5nv8o7R/0M1REvJUgbRJAmQSrK1/n1EwRmm2FKl5jYSOd4KYUay95S9pIW0DKw==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
