@@ -269,6 +269,7 @@ export class ValheimWorld extends Construct {
     this.fileSystem = props?.fileSystem ?? new efs.FileSystem(this, 'ValheimSaveDataEFS', {
       vpc,
       lifecyclePolicy: efs.LifecyclePolicy.AFTER_14_DAYS,
+      encrypted: false,
     });
 
     const volumeConfig = {
