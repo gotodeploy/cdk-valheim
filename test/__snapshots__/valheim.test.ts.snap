@@ -360,8 +360,8 @@ Object {
         },
         "Volumes": Array [
           Object {
-            "EfsVolumeConfiguration": Object {
-              "FileSystemId": Object {
+            "EFSVolumeConfiguration": Object {
+              "FilesystemId": Object {
                 "Ref": "ValheimWorldValheimSaveDataEFSEF58E82E",
               },
             },
@@ -634,6 +634,10 @@ Object {
       "Type": "AWS::EC2::EIP",
     },
     "vpcPublicSubnet1NATGateway9C16659E": Object {
+      "DependsOn": Array [
+        "vpcPublicSubnet1DefaultRoute10708846",
+        "vpcPublicSubnet1RouteTableAssociation5D3F4579",
+      ],
       "Properties": Object {
         "AllocationId": Object {
           "Fn::GetAtt": Array [
@@ -738,6 +742,10 @@ Object {
       "Type": "AWS::EC2::EIP",
     },
     "vpcPublicSubnet2NATGateway9B8AE11A": Object {
+      "DependsOn": Array [
+        "vpcPublicSubnet2DefaultRouteA1EC0F60",
+        "vpcPublicSubnet2RouteTableAssociation21F81B59",
+      ],
       "Properties": Object {
         "AllocationId": Object {
           "Fn::GetAtt": Array [
