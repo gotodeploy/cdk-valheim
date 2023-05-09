@@ -1,4 +1,4 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gotodeploy/cdk-valheim/Build) [![GitHub license](https://img.shields.io/github/license/gotodeploy/cdk-valheim)](https://github.com/gotodeploy/cdk-valheim/blob/main/LICENSE) ![npm](https://img.shields.io/npm/dw/cdk-valheim?label=npm) ![PyPI - Downloads](https://img.shields.io/pypi/dw/cdk-valheim?label=PyPI)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/gotodeploy/cdk-valheim/build.yml?branch=main) [![GitHub license](https://img.shields.io/github/license/gotodeploy/cdk-valheim)](https://github.com/gotodeploy/cdk-valheim/blob/main/LICENSE) ![npm](https://img.shields.io/npm/dw/cdk-valheim?label=npm) ![PyPI - Downloads](https://img.shields.io/pypi/dw/cdk-valheim?label=PyPI)
 # cdk-valheim
 
 A high level CDK construct of [Valheim](https://www.valheimgame.com/) dedicated server.
